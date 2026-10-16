@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" width="1600" height="1200" style="background-color: #0f172a; font-family: 'Plus Jakarta Sans', system-ui, sans-serif;">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#b45309" />
+    </linearGradient>
+    <linearGradient id="tealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#14b8a6" />
+      <stop offset="100%" stop-color="#0f766e" />
+    </linearGradient>
+  </defs>
+
+  <!-- Canvas Header -->
+  <text x="80" y="80" fill="#f8fafc" font-size="32" font-weight="700" font-family="'Playfair Display', Georgia, serif">AURA LUXURY HOSPITALITY &amp; TOURISM — UI DESIGN SYSTEM KIT</text>
+  <text x="80" y="115" fill="#94a3b8" font-size="14">Figma Design System Components, Color Tokens &amp; Atomic UI Elements</text>
+
+  <!-- Section 1: Color Palette Tokens -->
+  <g transform="translate(80, 160)">
+    <text x="0" y="0" fill="#fcd34d" font-size="16" font-weight="700" letter-spacing="1">01. COLOR PALETTES</text>
+
+    <!-- Primary Emerald/Teal -->
+    <g transform="translate(0, 25)">
+      <rect x="0" y="0" width="80" height="60" rx="12" fill="#042f2e" />
+      <text x="10" y="80" fill="#94a3b8" font-size="11">Teal-950</text>
+      <text x="10" y="95" fill="#64748b" font-size="10">#042f2e</text>
+
+      <rect x="100" y="0" width="80" height="60" rx="12" fill="#0f766e" />
+      <text x="110" y="80" fill="#94a3b8" font-size="11">Teal-700</text>
+      <text x="110" y="95" fill="#64748b" font-size="10">#0f766e</text>
+
+      <rect x="200" y="0" width="80" height="60" rx="12" fill="#14b8a6" />
+      <text x="210" y="80" fill="#94a3b8" font-size="11">Teal-500</text>
+      <text x="210" y="95" fill="#64748b" font-size="10">#14b8a6</text>
+
+      <rect x="300" y="0" width="80" height="60" rx="12" fill="#ccfbf1" />
+      <text x="310" y="80" fill="#94a3b8" font-size="11">Teal-100</text>
+      <text x="310" y="95" fill="#64748b" font-size="10">#ccfbf1</text>
+    </g>
+
+    <!-- Accent Gold -->
+    <g transform="translate(440, 25)">
+      <rect x="0" y="0" width="80" height="60" rx="12" fill="#b45309" />
+      <text x="10" y="80" fill="#94a3b8" font-size="11">Gold-700</text>
+      <text x="10" y="95" fill="#64748b" font-size="10">#b45309</text>
+
+      <rect x="100" y="0" width="80" height="60" rx="12" fill="#f59e0b" />
+      <text x="110" y="80" fill="#94a3b8" font-size="11">Gold-500</text>
+      <text x="110" y="95" fill="#64748b" font-size="10">#f59e0b</text>
+
+      <rect x="200" y="0" width="80" height="60" rx="12" fill="#fde68a" />
+      <text x="210" y="80" fill="#94a3b8" font-size="11">Gold-200</text>
+      <text x="210" y="95" fill="#64748b" font-size="10">#fde68a</text>
+    </g>
+
+    <!-- PMS Status Tokens -->
+    <g transform="translate(780, 25)">
+      <rect x="0" y="0" width="80" height="60" rx="12" fill="#10b981" />
+      <text x="10" y="80" fill="#94a3b8" font-size="11">Occupied</text>
+      <text x="10" y="95" fill="#64748b" font-size="10">#10b981</text>
+
+      <rect x="100" y="0" width="80" height="60" rx="12" fill="#d97706" />
+      <text x="110" y="80" fill="#94a3b8" font-size="11">Turnover</text>
+      <text x="110" y="95" fill="#64748b" font-size="10">#d97706</text>
+
+      <rect x="200" y="0" width="80" height="60" rx="12" fill="#e11d48" />
+      <text x="210" y="80" fill="#94a3b8" font-size="11">Maint.</text>
+      <text x="210" y="95" fill="#64748b" font-size="10">#e11d48</text>
+
+      <rect x="300" y="0" width="80" height="60" rx="12" fill="#2563eb" />
+      <text x="310" y="80" fill="#94a3b8" font-size="11">Inspected</text>
+      <text x="310" y="95" fill="#64748b" font-size="10">#2563eb</text>
+    </g>
+  </g>
+
+  <!-- Section 2: Typography Scales -->
+  <g transform="translate(80, 320)">
+    <text x="0" y="0" fill="#fcd34d" font-size="16" font-weight="700" letter-spacing="1">02. TYPOGRAPHY SCALES</text>
+    <g transform="translate(0, 30)">
+      <text x="0" y="30" fill="#f8fafc" font-size="36" font-weight="700" font-family="'Playfair Display', Georgia, serif">Display H1 (Playfair Display, 36px Bold)</text>
+      <text x="0" y="70" fill="#f8fafc" font-size="24" font-weight="700" font-family="'Playfair Display', Georgia, serif">Section Heading H2 (Playfair Display, 24px Bold)</text>
+      <text x="0" y="105" fill="#cbd5e1" font-size="16" font-weight="600">Component Card Title (Plus Jakarta Sans, 16px SemiBold)</text>
+      <text x="0" y="135" fill="#94a3b8" font-size="13">Body Paragraph Text: Suspended above turquoise crystalline lagoons in a UNESCO reserve. (13px Regular)</text>
+      <text x="0" y="160" fill="#5eead4" font-size="11" font-weight="700" letter-spacing="1.5">MICRO BADGE &amp; STATS CAPTION (11px Bold Uppercase)</text>
+    </g>
+  </g>
+
+  <!-- Section 3: UI Buttons & Controls -->
+  <g transform="translate(80, 560)">
+    <text x="0" y="0" fill="#fcd34d" font-size="16" font-weight="700" letter-spacing="1">03. BUTTONS &amp; INTERACTIVE PILLS</text>
+
+    <!-- Primary Button -->
+    <g transform="translate(0, 30)">
+      <rect x="0" y="0" width="180" height="48" rx="14" fill="url(#tealGrad)" />
+      <text x="35" y="29" fill="#ffffff" font-size="13" font-weight="700">EXPLORE VILLA ➔</text>
+
+      <rect x="210" y="0" width="180" height="48" rx="14" fill="url(#goldGrad)" />
+      <text x="240" y="29" fill="#042f2e" font-size="13" font-weight="800">VIP CHECKOUT</text>
+
+      <rect x="420" y="0" width="160" height="48" rx="14" fill="transparent" stroke="#334155" stroke-width="2" />
+      <text x="455" y="29" fill="#cbd5e1" font-size="13" font-weight="600">Cancel / Close</text>
+
+      <!-- Category Filter Pills -->
+      <g transform="translate(620, 8)">
+        <rect x="0" y="0" width="110" height="32" rx="16" fill="#1e293b" stroke="#0d9488" stroke-width="1.5" />
+        <text x="22" y="20" fill="#5eead4" font-size="11" font-weight="700">Overwater (4)</text>
+
+        <rect x="125" y="0" width="100" height="32" rx="16" fill="#1e293b" />
+        <text x="145" y="20" fill="#94a3b8" font-size="11" font-weight="600">Alpine (2)</text>
+
+        <rect x="240" y="0" width="100" height="32" rx="16" fill="#1e293b" />
+        <text x="260" y="20" fill="#94a3b8" font-size="11" font-weight="600">Safari (1)</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Section 4: Card Component Specimen -->
+  <g transform="translate(80, 720)">
+    <text x="0" y="0" fill="#fcd34d" font-size="16" font-weight="700" letter-spacing="1">04. COMPONENT CARD ATOM (STAY / VILLA)</text>
+
+    <!-- Card Frame -->
+    <g transform="translate(0, 30)">
+      <rect x="0" y="0" width="380" height="380" rx="24" fill="#1e293b" stroke="#334155" stroke-width="1" />
+      
+      <!-- Card Image Header -->
+      <rect x="0" y="0" width="380" height="190" rx="24" fill="#0f766e" />
+      <rect x="0" y="160" width="380" height="30" fill="#0f766e" />
+      <text x="20" y="40" fill="#ffffff" font-size="10" font-weight="800" letter-spacing="1">PRIVATE ISLAND</text>
+      <text x="20" y="170" fill="#ffffff" font-size="18" font-weight="700" font-family="'Playfair Display', Georgia, serif">Azure Overwater Sanctuary</text>
+
+      <!-- Rating Pill -->
+      <rect x="300" y="20" width="60" height="24" rx="12" fill="rgba(0,0,0,0.4)" />
+      <text x="312" y="36" fill="#fcd34d" font-size="11" font-weight="700">★ 4.98</text>
+
+      <!-- Card Body -->
+      <text x="20" y="225" fill="#94a3b8" font-size="12">Baa Atoll, Maldives &bull; 2 Bedrooms &bull; 280 m²</text>
+      <text x="20" y="255" fill="#64748b" font-size="11">Direct reef access, freshwater infinity pool, catamaran nets.</text>
+
+      <!-- Card Divider -->
+      <line x1="20" y1="310" x2="360" y2="310" stroke="#334155" stroke-width="1" />
+
+      <!-- Price & CTA -->
+      <text x="20" y="340" fill="#64748b" font-size="10">From</text>
+      <text x="20" y="362" fill="#ffffff" font-size="20" font-weight="700" font-family="'Playfair Display', Georgia, serif">$1,450 <tspan font-size="11" fill="#64748b">/ night</tspan></text>
+
+      <rect x="250" y="328" width="110" height="36" rx="12" fill="#0f766e" />
+      <text x="280" y="351" fill="#ffffff" font-size="11" font-weight="700">Reserve</text>
+    </g>
+
+    <!-- PMS Room Rack Unit Card -->
+    <g transform="translate(440, 30)">
+      <rect x="0" y="0" width="380" height="200" rx="20" fill="#1e293b" stroke="#334155" stroke-width="1" />
+      
+      <!-- Top Strip -->
+      <rect x="20" y="20" width="60" height="24" rx="6" fill="#0f172a" />
+      <text x="32" y="36" fill="#f8fafc" font-size="11" font-family="monospace" font-weight="700">#101</text>
+
+      <rect x="250" y="20" width="110" height="24" rx="12" fill="#065f46" />
+      <text x="270" y="36" fill="#34d399" font-size="10" font-weight="700">OCCUPIED</text>
+
+      <text x="20" y="75" fill="#ffffff" font-size="15" font-weight="700">Azure Overwater 101</text>
+      <text x="20" y="95" fill="#64748b" font-size="11">Guest: Lord Harrison Blake &bull; Checkout: Oct 18</text>
+
+      <rect x="20" y="115" width="340" height="40" rx="10" fill="#0f172a" />
+      <text x="35" y="139" fill="#94a3b8" font-size="11">Butler: Ramesh &bull; Open Folio Balance: <tspan fill="#fcd34d" font-weight="700">$7,250</tspan></text>
+
+      <text x="20" y="185" fill="#5eead4" font-size="11" font-weight="600">Click to inspect guest folio &amp; post charges ➔</text>
+    </g>
+  </g>
+</svg>

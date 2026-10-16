@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 1600" width="1440" height="1600" style="background-color: #fbf9f5; font-family: 'Plus Jakarta Sans', system-ui, sans-serif;">
+  <!-- Top Ticker -->
+  <rect x="0" y="0" width="1440" height="32" fill="#042f2e" />
+  <text x="60" y="20" fill="#99f6e4" font-size="11" font-weight="600" letter-spacing="1">UNESCO BIOSPHERE RESERVE &bull; 100% SOLAR POWERED SANCTUARY</text>
+  <text x="1100" y="20" fill="#fde68a" font-size="11" font-weight="600">PRIVILEGE CODE: AURA10 (10% OFF)</text>
+
+  <!-- Navbar -->
+  <rect x="0" y="32" width="1440" height="80" fill="#ffffff" stroke="#ede4d4" stroke-width="1" />
+  <!-- Logo -->
+  <rect x="60" y="52" width="40" height="40" rx="10" fill="#042f2e" />
+  <text x="115" y="77" fill="#0f172a" font-size="22" font-weight="800" font-family="'Playfair Display', Georgia, serif">AURA</text>
+
+  <!-- Center Tabs -->
+  <g transform="translate(480, 52)">
+    <rect x="0" y="0" width="480" height="40" rx="20" fill="#f6f2ea" />
+    <rect x="4" y="4" width="120" height="32" rx="16" fill="#ffffff" />
+    <text x="28" y="24" fill="#0f172a" font-size="11" font-weight="700">Luxury Stays</text>
+    <text x="150" y="24" fill="#64748b" font-size="11" font-weight="600">Expeditions</text>
+    <text x="260" y="24" fill="#64748b" font-size="11" font-weight="600">Itinerary Planner</text>
+    <text x="380" y="24" fill="#64748b" font-size="11" font-weight="600">Dining &amp; Spa</text>
+  </g>
+
+  <!-- Right Actions -->
+  <g transform="translate(1120, 52)">
+    <rect x="0" y="0" width="140" height="40" rx="12" fill="#0f766e" />
+    <text x="28" y="24" fill="#ffffff" font-size="11" font-weight="700">My Trips (1)</text>
+
+    <rect x="155" y="0" width="105" height="40" rx="12" fill="#0f172a" />
+    <text x="175" y="24" fill="#fcd34d" font-size="11" font-weight="700">PMS Ops</text>
+  </g>
+
+  <!-- Hero Section -->
+  <rect x="0" y="112" width="1440" height="580" fill="#022c22" />
+  <text x="720" y="260" text-anchor="middle" fill="#99f6e4" font-size="12" font-weight="700" letter-spacing="2">WORLD'S LEADING LUXURY SANCTUARIES</text>
+  <text x="720" y="330" text-anchor="middle" fill="#ffffff" font-size="48" font-weight="700" font-family="'Playfair Display', Georgia, serif">Where Timeless Hospitality Meets</text>
+  <text x="720" y="390" text-anchor="middle" fill="#fde68a" font-size="48" font-weight="700" font-style="italic" font-family="'Playfair Display', Georgia, serif">Boundless Exploration</text>
+
+  <!-- Floating Glass Search Bar -->
+  <g transform="translate(240, 470)">
+    <rect x="0" y="0" width="960" height="90" rx="24" fill="#ffffff" filter="drop-shadow(0 15px 30px rgba(0,0,0,0.3))" />
+    
+    <!-- Col 1 -->
+    <text x="30" y="35" fill="#0d9488" font-size="10" font-weight="700" letter-spacing="1">DESTINATION</text>
+    <text x="30" y="60" fill="#0f172a" font-size="14" font-weight="600">Maldives, Baa Atoll</text>
+
+    <!-- Col 2 -->
+    <line x1="250" y1="20" x2="250" y2="70" stroke="#ede4d4" stroke-width="1" />
+    <text x="280" y="35" fill="#0d9488" font-size="10" font-weight="700" letter-spacing="1">CHECK-IN / OUT</text>
+    <text x="280" y="60" fill="#0f172a" font-size="14" font-weight="600">Oct 24 - Oct 31 (7 Nights)</text>
+
+    <!-- Col 3 -->
+    <line x1="510" y1="20" x2="510" y2="70" stroke="#ede4d4" stroke-width="1" />
+    <text x="540" y="35" fill="#0d9488" font-size="10" font-weight="700" letter-spacing="1">SANCTUARY TYPE</text>
+    <text x="540" y="60" fill="#0f172a" font-size="14" font-weight="600">Overwater Villa (2 Guests)</text>
+
+    <!-- Col 4 (Search Button) -->
+    <rect x="780" y="18" width="150" height="54" rx="16" fill="#042f2e" />
+    <text x="825" y="50" fill="#ffffff" font-size="13" font-weight="700">SEARCH</text>
+  </g>
+
+  <!-- Section Header: Stays -->
+  <g transform="translate(60, 750)">
+    <text x="0" y="20" fill="#0f766e" font-size="11" font-weight="800" letter-spacing="1.5">SANCTUARY COLLECTION</text>
+    <text x="0" y="55" fill="#0f172a" font-size="32" font-weight="700" font-family="'Playfair Display', Georgia, serif">Architectural Retreats &amp; Private Villas</text>
+
+    <!-- Filter Pills -->
+    <g transform="translate(800, 25)">
+      <rect x="0" y="0" width="90" height="36" rx="12" fill="#042f2e" />
+      <text x="20" y="22" fill="#ffffff" font-size="12" font-weight="700">All (8)</text>
+
+      <rect x="100" y="0" width="130" height="36" rx="12" fill="#ede4d4" />
+      <text x="120" y="22" fill="#334155" font-size="12" font-weight="600">Overwater (2)</text>
+
+      <rect x="240" y="0" width="110" height="36" rx="12" fill="#ede4d4" />
+      <text x="260" y="22" fill="#334155" font-size="12" font-weight="600">Alpine (2)</text>
+
+      <rect x="360" y="0" width="110" height="36" rx="12" fill="#ede4d4" />
+      <text x="380" y="22" fill="#334155" font-size="12" font-weight="600">Cliffside (2)</text>
+    </g>
+  </g>
+
+  <!-- Stays 3-Card Grid -->
+  <g transform="translate(60, 840)">
+    <!-- Card 1 -->
+    <rect x="0" y="0" width="410" height="420" rx="24" fill="#ffffff" stroke="#ede4d4" stroke-width="1" />
+    <rect x="0" y="0" width="410" height="220" rx="24" fill="#0d9488" />
+    <text x="25" y="40" fill="#ffffff" font-size="10" font-weight="800">MALDIVES</text>
+    <text x="25" y="200" fill="#ffffff" font-size="18" font-weight="700" font-family="'Playfair Display', Georgia, serif">Aura Azure Overwater Sanctuary</text>
+    <text x="25" y="260" fill="#64748b" font-size="12">Suspended above crystalline lagoons in UNESCO reserve.</text>
+    <text x="25" y="380" fill="#0f172a" font-size="20" font-weight="700" font-family="'Playfair Display', Georgia, serif">$1,450 <tspan font-size="12" fill="#64748b">/ night</tspan></text>
+    <rect x="270" y="355" width="115" height="38" rx="12" fill="#0f766e" />
+    <text x="305" y="378" fill="#ffffff" font-size="12" font-weight="700">Explore</text>
+
+    <!-- Card 2 -->
+    <rect x="455" y="0" width="410" height="420" rx="24" fill="#ffffff" stroke="#ede4d4" stroke-width="1" />
+    <rect x="455" y="0" width="410" height="220" rx="24" fill="#0369a1" />
+    <text x="480" y="40" fill="#ffffff" font-size="10" font-weight="800">AMALFI COAST, ITALY</text>
+    <text x="480" y="200" fill="#ffffff" font-size="18" font-weight="700" font-family="'Playfair Display', Georgia, serif">Palazzo Belvedere Cliffside Manor</text>
+    <text x="480" y="260" fill="#64748b" font-size="12">17th-century lemon-grove cliff sanctuary with private funicular.</text>
+    <text x="480" y="380" fill="#0f172a" font-size="20" font-weight="700" font-family="'Playfair Display', Georgia, serif">$1,850 <tspan font-size="12" fill="#64748b">/ night</tspan></text>
+    <rect x="725" y="355" width="115" height="38" rx="12" fill="#0f766e" />
+    <text x="760" y="378" fill="#ffffff" font-size="12" font-weight="700">Explore</text>
+
+    <!-- Card 3 -->
+    <rect x="910" y="0" width="410" height="420" rx="24" fill="#ffffff" stroke="#ede4d4" stroke-width="1" />
+    <rect x="910" y="0" width="410" height="220" rx="24" fill="#334155" />
+    <text x="935" y="40" fill="#ffffff" font-size="10" font-weight="800">SWISS ALPS</text>
+    <text x="935" y="200" fill="#ffffff" font-size="18" font-weight="700" font-family="'Playfair Display', Georgia, serif">Matterhorn Panorama Glass Chalet</text>
+    <text x="935" y="260" fill="#64748b" font-size="12">Tri-level heated glass chalet facing the Matterhorn pyramid.</text>
+    <text x="935" y="380" fill="#0f172a" font-size="20" font-weight="700" font-family="'Playfair Display', Georgia, serif">$2,100 <tspan font-size="12" fill="#64748b">/ night</tspan></text>
+    <rect x="1180" y="355" width="115" height="38" rx="12" fill="#0f766e" />
+    <text x="1215" y="378" fill="#ffffff" font-size="12" font-weight="700">Explore</text>
+  </g>
+
+  <!-- Footer -->
+  <rect x="0" y="1380" width="1440" height="220" fill="#042f2e" />
+  <text x="60" y="1450" fill="#ffffff" font-size="24" font-weight="700" font-family="'Playfair Display', Georgia, serif">AURA</text>
+  <text x="60" y="1475" fill="#99f6e4" font-size="11" letter-spacing="1">HOSPITALITY &amp; TOURISM SUITE</text>
+  <text x="60" y="1515" fill="#cbd5e1" font-size="12">Bespoke architectural retreats, expeditions &amp; full property operations PMS.</text>
+  <text x="1000" y="1515" fill="#64748b" font-size="11">&copy; 2026 AURA International. Model-View-Presenter &bull; Blazor &bull; Tailwind.</text>
+</svg>

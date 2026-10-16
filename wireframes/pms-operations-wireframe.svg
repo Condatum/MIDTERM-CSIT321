@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 1200" width="1440" height="1200" style="background-color: #0f172a; font-family: 'Plus Jakarta Sans', system-ui, sans-serif;">
+  <!-- Top Bar -->
+  <rect x="0" y="0" width="1440" height="70" fill="#020617" stroke="#1e293b" stroke-width="1" />
+  <text x="60" y="42" fill="#f8fafc" font-size="20" font-weight="700" font-family="'Playfair Display', Georgia, serif">AURA PMS</text>
+  <text x="180" y="42" fill="#38bdf8" font-size="11" font-weight="700" letter-spacing="1">PROPERTY &amp; EXPEDITIONS OPERATIONS HUB</text>
+
+  <g transform="translate(1000, 18)">
+    <rect x="0" y="0" width="130" height="34" rx="8" fill="#1e293b" />
+    <text x="18" y="22" fill="#fcd34d" font-size="11" font-weight="700">★ Front Desk Active</text>
+
+    <rect x="145" y="0" width="160" height="34" rx="8" fill="#0f766e" />
+    <text x="160" y="22" fill="#ffffff" font-size="11" font-weight="700">➔ Back to Traveler</text>
+  </g>
+
+  <!-- Sub Navigation -->
+  <g transform="translate(60, 95)">
+    <rect x="0" y="0" width="130" height="36" rx="10" fill="#fcd34d" />
+    <text x="20" y="23" fill="#0f172a" font-size="12" font-weight="700">Room Rack (12)</text>
+
+    <rect x="140" y="0" width="150" height="36" rx="10" fill="#1e293b" />
+    <text x="155" y="23" fill="#94a3b8" font-size="12" font-weight="600">Tour Manifests (5)</text>
+
+    <rect x="300" y="0" width="180" height="36" rx="10" fill="#1e293b" />
+    <text x="315" y="23" fill="#94a3b8" font-size="12" font-weight="600">Housekeeping &amp; Butler (5)</text>
+  </g>
+
+  <!-- 4 Executive KPI Cards -->
+  <g transform="translate(60, 155)">
+    <!-- KPI 1 -->
+    <rect x="0" y="0" width="310" height="110" rx="18" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="24" y="35" fill="#94a3b8" font-size="11" font-weight="600">OCCUPANCY RATE</text>
+    <text x="24" y="75" fill="#f8fafc" font-size="28" font-weight="700">75.0% <tspan fill="#34d399" font-size="12">+4.2% MoM</tspan></text>
+    <rect x="24" y="90" width="260" height="6" rx="3" fill="#334155" />
+    <rect x="24" y="90" width="195" height="6" rx="3" fill="#10b981" />
+
+    <!-- KPI 2 -->
+    <rect x="335" y="0" width="310" height="110" rx="18" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="359" y="35" fill="#94a3b8" font-size="11" font-weight="600">AVERAGE DAILY RATE (ADR)</text>
+    <text x="359" y="75" fill="#f8fafc" font-size="28" font-weight="700">$1,650 <tspan fill="#34d399" font-size="12">+8.5% YoY</tspan></text>
+    <text x="359" y="96" fill="#64748b" font-size="11">Luxury villa &amp; chalet blend</text>
+
+    <!-- KPI 3 -->
+    <rect x="670" y="0" width="310" height="110" rx="18" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="694" y="35" fill="#94a3b8" font-size="11" font-weight="600">REVPAR (REVENUE PER AVAIL ROOM)</text>
+    <text x="694" y="75" fill="#f8fafc" font-size="28" font-weight="700">$1,237 <tspan fill="#fcd34d" font-size="12">Peak Yield</tspan></text>
+    <text x="694" y="96" fill="#64748b" font-size="11">Optimal seasonal performance</text>
+
+    <!-- KPI 4 -->
+    <rect x="1005" y="0" width="315" height="110" rx="18" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <text x="1029" y="35" fill="#94a3b8" font-size="11" font-weight="600">ACTIVE FOLIO BALANCES</text>
+    <text x="1029" y="75" fill="#fcd34d" font-size="28" font-weight="700">$61,040</text>
+    <text x="1029" y="96" fill="#64748b" font-size="11">Across 9 in-house suites</text>
+  </g>
+
+  <!-- Room Rack Matrix Header -->
+  <g transform="translate(60, 295)">
+    <text x="0" y="25" fill="#f8fafc" font-size="20" font-weight="700" font-family="'Playfair Display', Georgia, serif">Live Room Matrix Dispatch</text>
+
+    <!-- Filter Buttons -->
+    <g transform="translate(680, 5)">
+      <rect x="0" y="0" width="70" height="30" rx="8" fill="#0f172a" stroke="#475569" stroke-width="1" />
+      <text x="15" y="19" fill="#f8fafc" font-size="11">All (12)</text>
+
+      <rect x="80" y="0" width="110" height="30" rx="8" fill="#065f46" />
+      <text x="95" y="19" fill="#34d399" font-size="11" font-weight="700">Occupied (9)</text>
+
+      <rect x="200" y="0" width="115" height="30" rx="8" fill="#115e59" />
+      <text x="215" y="19" fill="#5eead4" font-size="11" font-weight="700">Clean Ready (2)</text>
+
+      <rect x="325" y="0" width="110" height="30" rx="8" fill="#92400e" />
+      <text x="340" y="19" fill="#fde68a" font-size="11" font-weight="700">Turnover (1)</text>
+
+      <rect x="445" y="0" width="120" height="30" rx="8" fill="#881337" />
+      <text x="460" y="19" fill="#fda4af" font-size="11" font-weight="700">Maint. (1)</text>
+    </g>
+  </g>
+
+  <!-- 12-Unit Room Rack Cards Grid -->
+  <g transform="translate(60, 350)">
+    <!-- Suite 101 -->
+    <rect x="0" y="0" width="310" height="175" rx="16" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect x="15" y="15" width="55" height="22" rx="6" fill="#0f172a" />
+    <text x="25" y="30" fill="#f8fafc" font-size="10" font-family="monospace">#101</text>
+    <rect x="210" y="15" width="85" height="22" rx="11" fill="#065f46" />
+    <text x="225" y="30" fill="#34d399" font-size="10" font-weight="700">Occupied</text>
+    <text x="15" y="65" fill="#ffffff" font-size="14" font-weight="700">Azure Overwater 101</text>
+    <text x="15" y="85" fill="#94a3b8" font-size="11">Lord Harrison Blake &bull; Out: Oct 18</text>
+    <rect x="15" y="100" width="280" height="32" rx="8" fill="#0f172a" />
+    <text x="25" y="120" fill="#cbd5e1" font-size="10">Butler: Ramesh &bull; Folio: <tspan fill="#fcd34d" font-weight="700">$7,250</tspan></text>
+    <text x="15" y="155" fill="#38bdf8" font-size="10">Click to view folio &amp; post charge ➔</text>
+
+    <!-- Suite 102 -->
+    <rect x="335" y="0" width="310" height="175" rx="16" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect x="350" y="15" width="55" height="22" rx="6" fill="#0f172a" />
+    <text x="360" y="30" fill="#f8fafc" font-size="10" font-family="monospace">#102</text>
+    <rect x="530" y="15" width="100" height="22" rx="11" fill="#115e59" />
+    <text x="545" y="30" fill="#5eead4" font-size="10" font-weight="700">Vacant Clean</text>
+    <text x="350" y="65" fill="#ffffff" font-size="14" font-weight="700">Azure Overwater 102</text>
+    <text x="350" y="85" fill="#64748b" font-size="11">Available for immediate check-in</text>
+    <rect x="350" y="100" width="280" height="32" rx="8" fill="#0f172a" />
+    <text x="360" y="120" fill="#64748b" font-size="10">Butler: Unassigned &bull; Folio: $0</text>
+    <text x="350" y="155" fill="#5eead4" font-size="10">Ready for VIP arrival ➔</text>
+
+    <!-- Suite 103 -->
+    <rect x="670" y="0" width="310" height="175" rx="16" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect x="685" y="15" width="55" height="22" rx="6" fill="#0f172a" />
+    <text x="695" y="30" fill="#f8fafc" font-size="10" font-family="monospace">#103</text>
+    <rect x="850" y="15" width="115" height="22" rx="11" fill="#92400e" />
+    <text x="865" y="30" fill="#fde68a" font-size="10" font-weight="700">Dirty Turnover</text>
+    <text x="685" y="65" fill="#ffffff" font-size="14" font-weight="700">Azure Overwater 103</text>
+    <text x="685" y="85" fill="#fde68a" font-size="11">Departed (Sarah Chen) at 11:00</text>
+    <rect x="685" y="100" width="280" height="32" rx="8" fill="#0f172a" />
+    <text x="695" y="120" fill="#fde68a" font-size="10">Assignee: Team Alpha (In Progress)</text>
+    <text x="685" y="155" fill="#f59e0b" font-size="10">Mark as Sanitized &amp; Inspected ➔</text>
+
+    <!-- Suite 104 -->
+    <rect x="1005" y="0" width="315" height="175" rx="16" fill="#1e293b" stroke="#eab308" stroke-width="1" />
+    <rect x="1020" y="15" width="55" height="22" rx="6" fill="#0f172a" />
+    <text x="1030" y="30" fill="#f8fafc" font-size="10" font-family="monospace">#104</text>
+    <rect x="1205" y="15" width="100" height="22" rx="11" fill="#713f12" />
+    <text x="1220" y="30" fill="#fde047" font-size="10" font-weight="700">VIP IN-HOUSE</text>
+    <text x="1020" y="65" fill="#ffffff" font-size="14" font-weight="700">Lagoon Presidential Suite</text>
+    <text x="1020" y="85" fill="#94a3b8" font-size="11">Dr. Sophia &amp; Alexander Vance</text>
+    <rect x="1020" y="100" width="285" height="32" rx="8" fill="#0f172a" />
+    <text x="1030" y="120" fill="#cbd5e1" font-size="10">Butler: Kavita &bull; Folio: <tspan fill="#fcd34d" font-weight="700">$14,200</tspan></text>
+    <text x="1020" y="155" fill="#fde047" font-size="10">Post Michelin dining / spa charges ➔</text>
+  </g>
+
+  <!-- Suite 201-204 Second Row -->
+  <g transform="translate(60, 545)">
+    <!-- Suite 201 -->
+    <rect x="0" y="0" width="310" height="175" rx="16" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect x="15" y="15" width="55" height="22" rx="6" fill="#0f172a" />
+    <text x="25" y="30" fill="#f8fafc" font-size="10" font-family="monospace">#201</text>
+    <rect x="210" y="15" width="85" height="22" rx="11" fill="#065f46" />
+    <text x="225" y="30" fill="#34d399" font-size="10" font-weight="700">Occupied</text>
+    <text x="15" y="65" fill="#ffffff" font-size="14" font-weight="700">Belvedere Cliffside 201</text>
+    <text x="15" y="85" fill="#94a3b8" font-size="11">Marcello Rossi &bull; Out: Oct 19</text>
+    <rect x="15" y="100" width="280" height="32" rx="8" fill="#0f172a" />
+    <text x="25" y="120" fill="#cbd5e1" font-size="10">Butler: Gianni &bull; Folio: <tspan fill="#fcd34d" font-weight="700">$6,400</tspan></text>
+    <text x="15" y="155" fill="#38bdf8" font-size="10">Click to view folio &amp; post charge ➔</text>
+
+    <!-- Suite 202 -->
+    <rect x="335" y="0" width="310" height="175" rx="16" fill="#1e293b" stroke="#e11d48" stroke-width="1" />
+    <rect x="350" y="15" width="55" height="22" rx="6" fill="#0f172a" />
+    <text x="360" y="30" fill="#f8fafc" font-size="10" font-family="monospace">#202</text>
+    <rect x="520" y="15" width="110" height="22" rx="11" fill="#881337" />
+    <text x="535" y="30" fill="#fda4af" font-size="10" font-weight="700">Maintenance</text>
+    <text x="350" y="65" fill="#ffffff" font-size="14" font-weight="700">Belvedere Cliffside 202</text>
+    <text x="350" y="85" fill="#fda4af" font-size="11">Pool heating sensor calibration</text>
+    <rect x="350" y="100" width="280" height="32" rx="8" fill="#0f172a" />
+    <text x="360" y="120" fill="#fda4af" font-size="10">Engineering: Luigi &bull; TKT-805</text>
+    <text x="350" y="155" fill="#fda4af" font-size="10">View Maintenance Ticket ➔</text>
+
+    <!-- Suite 301 -->
+    <rect x="670" y="0" width="310" height="175" rx="16" fill="#1e293b" stroke="#334155" stroke-width="1" />
+    <rect x="685" y="15" width="55" height="22" rx="6" fill="#0f172a" />
+    <text x="695" y="30" fill="#f8fafc" font-size="10" font-family="monospace">#301</text>
+    <rect x="880" y="15" width="85" height="22" rx="11" fill="#065f46" />
+    <text x="895" y="30" fill="#34d399" font-size="10" font-weight="700">Occupied</text>
+    <text x="685" y="65" fill="#ffffff" font-size="14" font-weight="700">Matterhorn Alpine Glass</text>
+    <text x="685" y="85" fill="#94a3b8" font-size="11">Countess Eleanor Wright</text>
+    <rect x="685" y="100" width="280" height="32" rx="8" fill="#0f172a" />
+    <text x="695" y="120" fill="#cbd5e1" font-size="10">Butler: Hans &bull; Folio: <tspan fill="#fcd34d" font-weight="700">$12,600</tspan></text>
+    <text x="685" y="155" fill="#38bdf8" font-size="10">Click to view folio &amp; post charge ➔</text>
+
+    <!-- Suite 302 -->
+    <rect x="1005" y="0" width="315" height="175" rx="16" fill="#1e293b" stroke="#3b82f6" stroke-width="1" />
+    <rect x="1020" y="15" width="55" height="22" rx="6" fill="#0f172a" />
+    <text x="1030" y="30" fill="#f8fafc" font-size="10" font-family="monospace">#302</text>
+    <rect x="1195" y="15" width="110" height="22" rx="11" fill="#1e3a8a" />
+    <text x="1210" y="30" fill="#93c5fd" font-size="10" font-weight="700">Inspected Ready</text>
+    <text x="1020" y="65" fill="#ffffff" font-size="14" font-weight="700">Matterhorn Penthouse</text>
+    <text x="1020" y="85" fill="#93c5fd" font-size="11">VIP Arrival expected at 18:00</text>
+    <rect x="1020" y="100" width="285" height="32" rx="8" fill="#0f172a" />
+    <text x="1030" y="120" fill="#93c5fd" font-size="10">Butler: Lukas &bull; Folio: $0</text>
+    <text x="1020" y="155" fill="#93c5fd" font-size="10">Key Pass Prepared ➔</text>
+  </g>
+</svg>
