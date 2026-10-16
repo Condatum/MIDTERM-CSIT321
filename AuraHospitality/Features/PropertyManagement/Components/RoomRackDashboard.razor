@@ -1,0 +1,190 @@
+@inject RoomRackPresenter Presenter
+@inject ICurrencyService CurrencyService
+@inject IAppStateService AppState
+@implements IRoomRackView
+@implements IDisposable
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <!-- PMS Title & KPI Strip -->
+    <div class="mb-8">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+            <div>
+                <span class="text-[10px] uppercase font-bold tracking-widest text-primary-700 bg-primary-100/60 px-3 py-1 rounded-full border border-primary-200">
+                    AURA PMS Operations Hub
+                </span>
+                <h2 class="font-serif-luxury text-3xl font-bold text-slate-900 mt-2">Front Desk & Room Rack Dispatch</h2>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-xs font-semibold text-slate-600">Live PMS Synced &bull; Real-time Yield Management</span>
+            </div>
+        </div>
+
+        <!-- 4 KPI Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="p-5 rounded-2xl bg-white border border-sand-200 shadow-sm">
+                <span class="text-xs text-slate-500 font-medium">Occupancy Rate</span>
+                <div class="flex items-baseline gap-2 mt-1">
+                    <span class="text-2xl font-bold text-slate-900">@((_rooms.Count(r => r.Status == RoomStatusType.Occupied) * 100.0 / Math.Max(1, _rooms.Count)).ToString("F1"))%</span>
+                    <span class="text-xs text-emerald-600 font-semibold">+4.2% MoM</span>
+                </div>
+                <div class="w-full bg-sand-200 h-1.5 rounded-full mt-3 overflow-hidden">
+                    <div class="bg-emerald-500 h-full rounded-full" style="width: 75%"></div>
+                </div>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-white border border-sand-200 shadow-sm">
+                <span class="text-xs text-slate-500 font-medium">ADR (Average Daily Rate)</span>
+                <div class="flex items-baseline gap-2 mt-1">
+                    <span class="text-2xl font-bold text-slate-900">@CurrencyService.FormatPrice(1650m)</span>
+                    <span class="text-xs text-emerald-600 font-semibold">+8.5% YoY</span>
+                </div>
+                <span class="text-[10px] text-slate-400 mt-2 block">Luxury Villa & Chalet blend</span>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-white border border-sand-200 shadow-sm">
+                <span class="text-xs text-slate-500 font-medium">RevPAR</span>
+                <div class="flex items-baseline gap-2 mt-1">
+                    <span class="text-2xl font-bold text-slate-900">@CurrencyService.FormatPrice(1237m)</span>
+                    <span class="text-xs text-emerald-600 font-semibold">Peak Index</span>
+                </div>
+                <span class="text-[10px] text-slate-400 mt-2 block">Revenue Per Available Room</span>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-white border border-sand-200 shadow-sm">
+                <span class="text-xs text-slate-500 font-medium">Total Open Folio Balance</span>
+                <div class="flex items-baseline gap-2 mt-1">
+                    <span class="text-2xl font-bold text-slate-900">@CurrencyService.FormatPrice(_rooms.Sum(r => r.FolioBalance))</span>
+                </div>
+                <span class="text-[10px] text-slate-400 mt-2 block">Across @_rooms.Count(r => r.Status == RoomStatusType.Occupied) active suites</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Filter Buttons -->
+    <div class="flex flex-wrap items-center gap-2 mb-6 p-2 rounded-2xl bg-sand-100/70 border border-sand-200">
+        <button @onclick="@(() => Presenter.FilterByStatus("All"))"
+                class="px-4 py-1.5 rounded-xl text-xs font-bold transition @(Presenter.StatusFilter == "All" ? "bg-slate-900 text-white shadow" : "text-slate-600 hover:bg-sand-200")">
+            All Units (@_rooms.Count)
+        </button>
+        <button @onclick="@(() => Presenter.FilterByStatus("Occupied"))"
+                class="px-4 py-1.5 rounded-xl text-xs font-bold transition @(Presenter.StatusFilter == "Occupied" ? "bg-emerald-600 text-white shadow" : "text-slate-600 hover:bg-sand-200")">
+            Occupied (@_rooms.Count(r => r.Status == RoomStatusType.Occupied))
+        </button>
+        <button @onclick="@(() => Presenter.FilterByStatus("VacantClean"))"
+                class="px-4 py-1.5 rounded-xl text-xs font-bold transition @(Presenter.StatusFilter == "VacantClean" ? "bg-teal-600 text-white shadow" : "text-slate-600 hover:bg-sand-200")">
+            Vacant Clean (@_rooms.Count(r => r.Status == RoomStatusType.VacantClean))
+        </button>
+        <button @onclick="@(() => Presenter.FilterByStatus("DirtyTurnover"))"
+                class="px-4 py-1.5 rounded-xl text-xs font-bold transition @(Presenter.StatusFilter == "DirtyTurnover" ? "bg-amber-600 text-white shadow" : "text-slate-600 hover:bg-sand-200")">
+            Dirty Turnover (@_rooms.Count(r => r.Status == RoomStatusType.DirtyTurnover))
+        </button>
+        <button @onclick="@(() => Presenter.FilterByStatus("InspectedReady"))"
+                class="px-4 py-1.5 rounded-xl text-xs font-bold transition @(Presenter.StatusFilter == "InspectedReady" ? "bg-blue-600 text-white shadow" : "text-slate-600 hover:bg-sand-200")">
+            Inspected Ready (@_rooms.Count(r => r.Status == RoomStatusType.InspectedReady))
+        </button>
+        <button @onclick="@(() => Presenter.FilterByStatus("Maintenance"))"
+                class="px-4 py-1.5 rounded-xl text-xs font-bold transition @(Presenter.StatusFilter == "Maintenance" ? "bg-rose-600 text-white shadow" : "text-slate-600 hover:bg-sand-200")">
+            Maintenance (@_rooms.Count(r => r.Status == RoomStatusType.Maintenance))
+        </button>
+    </div>
+
+    <!-- Room Rack Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        @foreach (var room in _rooms)
+        {
+            <div @onclick="@(() => Presenter.SelectRoomForInspection(room.RoomNumber))"
+                 class="p-5 rounded-2xl bg-white border border-sand-200 shadow-sm hover:shadow-lg transition cursor-pointer flex flex-col justify-between group">
+                <div>
+                    <!-- Top Row: Room number & status badge -->
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-mono font-bold px-2 py-1 rounded bg-sand-100 text-slate-900 border border-sand-200">
+                            #@room.RoomNumber
+                        </span>
+                        <span class="text-[10px] font-bold px-2.5 py-0.5 rounded-full @GetStatusBadge(room.Status)">
+                            @room.Status
+                        </span>
+                    </div>
+
+                    <!-- Room Title & Category -->
+                    <h4 class="font-serif-luxury text-sm font-bold text-slate-900 line-clamp-1 group-hover:text-primary-800 transition">
+                        @room.Name
+                    </h4>
+                    <span class="text-[11px] text-slate-500 block mb-3">@room.Category</span>
+
+                    <!-- Guest Details if Occupied -->
+                    @if (room.Status == RoomStatusType.Occupied && !string.IsNullOrWhiteSpace(room.GuestName))
+                    {
+                        <div class="p-2.5 rounded-xl bg-emerald-50/70 border border-emerald-100 text-[11px] text-emerald-950 mb-2">
+                            <span class="font-bold block truncate">👤 @room.GuestName</span>
+                            <span class="text-[10px] text-emerald-700">Check-out: @room.CheckOutDate</span>
+                        </div>
+                    }
+                    else if (room.Status == RoomStatusType.DirtyTurnover)
+                    {
+                        <div class="p-2 rounded-xl bg-amber-50 text-[11px] text-amber-900 border border-amber-200 mb-2">
+                            <span>🧹 Turnover clean requested</span>
+                        </div>
+                    }
+                </div>
+
+                <!-- Footer: Butler & Folio -->
+                <div class="pt-3 border-t border-sand-100 flex justify-between items-center text-[11px]">
+                    <span class="text-slate-500">Butler: <b class="text-slate-700">@room.AssignedButler</b></span>
+                    @if (room.FolioBalance > 0)
+                    {
+                        <span class="font-bold text-slate-900">@CurrencyService.FormatPrice(room.FolioBalance)</span>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Room Inspection Modal -->
+<RoomDetailModal Room="_selectedRoom" Charges="_charges" />
+
+@code {
+    private IReadOnlyList<RoomRackItem> _rooms = Array.Empty<RoomRackItem>();
+    private RoomRackItem? _selectedRoom;
+    private IReadOnlyList<FolioCharge> _charges = Array.Empty<FolioCharge>();
+
+    protected override void OnInitialized()
+    {
+        Presenter.AttachView(this);
+        CurrencyService.OnCurrencyChanged += StateHasChanged;
+    }
+
+    public void DisplayRooms(IReadOnlyList<RoomRackItem> rooms)
+    {
+        _rooms = rooms;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void DisplaySelectedRoom(RoomRackItem? room, IReadOnlyList<FolioCharge> charges)
+    {
+        _selectedRoom = room;
+        _charges = charges;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void ShowNotification(string title, string message, bool isSuccess)
+    {
+        AppState.PushNotification(title, message, isSuccess ? NotificationType.Success : NotificationType.Error);
+    }
+
+    private string GetStatusBadge(RoomStatusType status) => status switch
+    {
+        RoomStatusType.Occupied => "bg-emerald-100 text-emerald-800 border border-emerald-200",
+        RoomStatusType.VacantClean => "bg-teal-100 text-teal-800 border border-teal-200",
+        RoomStatusType.DirtyTurnover => "bg-amber-100 text-amber-800 border border-amber-200",
+        RoomStatusType.InspectedReady => "bg-blue-100 text-blue-800 border border-blue-200",
+        RoomStatusType.Maintenance => "bg-rose-100 text-rose-800 border border-rose-200",
+        _ => "bg-slate-100 text-slate-800"
+    };
+
+    public void Dispose()
+    {
+        CurrencyService.OnCurrencyChanged -= StateHasChanged;
+    }
+}

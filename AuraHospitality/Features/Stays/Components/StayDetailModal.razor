@@ -1,0 +1,194 @@
+@inject ICurrencyService CurrencyService
+@inject IBookingService BookingService
+@inject IAppStateService AppState
+
+@if (Stay != null)
+{
+    <div class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="relative bg-white rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl border border-sand-200 animate-fade-in my-8">
+            <!-- Close Button -->
+            <button @onclick="OnClose" class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/50 hover:bg-black/75 text-white flex items-center justify-center transition">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <!-- Image Carousel / Hero -->
+            <div class="relative h-72 sm:h-96 w-full overflow-hidden bg-slate-900">
+                <img src="@Stay.Images[_activeImageIndex]" alt="@Stay.Name" class="w-full h-full object-cover" />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+                <div class="absolute bottom-4 left-6 right-6 flex justify-between items-end text-white">
+                    <div>
+                        <span class="px-3 py-1 rounded-full bg-gold-500/90 text-primary-950 text-xs font-bold uppercase tracking-wider mb-2 inline-block">
+                            @Stay.Tag &bull; @Stay.Category
+                        </span>
+                        <h2 class="font-serif-luxury text-2xl sm:text-4xl font-bold text-white">@Stay.Name</h2>
+                        <p class="text-sand-200 text-xs sm:text-sm mt-1 flex items-center gap-1.5">
+                            <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            </svg>
+                            @Stay.Destination
+                        </p>
+                    </div>
+                    <!-- Thumbnail Navigation -->
+                    <div class="flex gap-2">
+                        @for (int i = 0; i < Stay.Images.Count; i++)
+                        {
+                            var idx = i;
+                            <button @onclick="@(() => _activeImageIndex = idx)"
+                                    class="w-12 h-12 rounded-lg overflow-hidden border-2 transition @(_activeImageIndex == idx ? "border-gold-400 scale-105" : "border-white/40 opacity-70")">
+                                <img src="@Stay.Images[idx]" class="w-full h-full object-cover" />
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="p-6 sm:p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Left: Details & Amenities -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Key Stats -->
+                        <div class="grid grid-cols-4 gap-3 p-4 rounded-2xl bg-sand-100/70 border border-sand-200 text-center">
+                            <div>
+                                <span class="block text-slate-500 text-[10px] uppercase font-bold tracking-wider">Bedrooms</span>
+                                <span class="font-bold text-slate-900 text-sm">@Stay.Bedrooms Suites</span>
+                            </div>
+                            <div>
+                                <span class="block text-slate-500 text-[10px] uppercase font-bold tracking-wider">Baths</span>
+                                <span class="font-bold text-slate-900 text-sm">@Stay.Bathrooms</span>
+                            </div>
+                            <div>
+                                <span class="block text-slate-500 text-[10px] uppercase font-bold tracking-wider">Capacity</span>
+                                <span class="font-bold text-slate-900 text-sm">@Stay.MaxGuests Guests</span>
+                            </div>
+                            <div>
+                                <span class="block text-slate-500 text-[10px] uppercase font-bold tracking-wider">Living Area</span>
+                                <span class="font-bold text-slate-900 text-sm">@Stay.SizeSqM m²</span>
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-primary-900 mb-2">Architectural Experience</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">@Stay.Description</p>
+                        </div>
+
+                        <!-- Amenities Grid -->
+                        <div>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-primary-900 mb-3">Sanctuary Inclusions</h3>
+                            <div class="grid grid-cols-2 gap-2.5">
+                                @foreach (var amenity in Stay.Amenities)
+                                {
+                                    <div class="flex items-center gap-2 text-xs text-slate-700">
+                                        <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        <span>@amenity</span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Instant Reservation Card -->
+                    <div class="p-6 rounded-2xl bg-gradient-to-b from-sand-100 to-sand-50 border border-sand-300 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-baseline mb-4">
+                                <span class="text-xs text-slate-500 uppercase font-semibold">Nightly Privilege</span>
+                                <div class="text-right">
+                                    <span class="text-2xl font-bold font-serif-luxury text-slate-900">@CurrencyService.FormatPrice(Stay.PricePerNight)</span>
+                                    <span class="text-[11px] text-slate-500 block">/ night + taxes</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-3 mb-6">
+                                <div>
+                                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Check-in Date</label>
+                                    <input type="date" @bind="_checkIn" class="w-full text-xs p-2 rounded-xl border border-sand-300 bg-white" />
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Check-out Date</label>
+                                    <input type="date" @bind="_checkOut" class="w-full text-xs p-2 rounded-xl border border-sand-300 bg-white" />
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Guests</label>
+                                    <select @bind="_guestCount" class="w-full text-xs p-2 rounded-xl border border-sand-300 bg-white">
+                                        @for (int g = 1; g <= Stay.MaxGuests; g++)
+                                        {
+                                            <option value="@g">@g Guests</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Selected Addons -->
+                            <div class="mb-6">
+                                <span class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-2">Curated Add-ons</span>
+                                <label class="flex items-center gap-2 text-xs text-slate-700 cursor-pointer mb-1.5">
+                                    <input type="checkbox" @bind="_includeChef" class="rounded text-primary-700" />
+                                    <span>Private Michelin Chef ($350)</span>
+                                </label>
+                                <label class="flex items-center gap-2 text-xs text-slate-700 cursor-pointer">
+                                    <input type="checkbox" @bind="_includeHelipad" class="rounded text-primary-700" />
+                                    <span>Helipad / Boat Transfer ($450)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button @onclick="ReserveStay"
+                                class="w-full py-3.5 rounded-xl bg-primary-900 hover:bg-primary-950 text-white font-bold text-xs tracking-wider uppercase transition shadow-lg shadow-teal-950/20 flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4 text-gold-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Add To Reservation</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public Stay? Stay { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private int _activeImageIndex = 0;
+    private DateTime _checkIn = DateTime.Today.AddDays(14);
+    private DateTime _checkOut = DateTime.Today.AddDays(18);
+    private int _guestCount = 2;
+    private bool _includeChef = true;
+    private bool _includeHelipad = false;
+
+    private void ReserveStay()
+    {
+        if (Stay == null) return;
+
+        decimal addons = (_includeChef ? 350m : 0m) + (_includeHelipad ? 450m : 0m);
+        var addonsList = new List<string>();
+        if (_includeChef) addonsList.Add("Private Michelin Chef");
+        if (_includeHelipad) addonsList.Add("Helipad / Speedboat Transfer");
+
+        var booking = new BookingItem
+        {
+            ItemType = BookingItemType.Stay,
+            TargetId = Stay.Id,
+            Title = Stay.Name,
+            ImageUrl = Stay.Images.FirstOrDefault() ?? string.Empty,
+            Destination = Stay.Destination,
+            StartDate = _checkIn,
+            EndDate = _checkOut,
+            Guests = _guestCount,
+            UnitPriceUSD = Stay.PricePerNight,
+            AddOnsPriceUSD = addons,
+            SelectedAddOns = addonsList
+        };
+
+        BookingService.AddBooking(booking);
+        AppState.PushNotification("Stay Reserved", $"{Stay.Name} has been added to your journey manifest.", NotificationType.Success);
+        AppState.ToggleTripsDrawer(true);
+        OnClose.InvokeAsync();
+    }
+}

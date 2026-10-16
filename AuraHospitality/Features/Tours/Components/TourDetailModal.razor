@@ -1,0 +1,174 @@
+@inject ICurrencyService CurrencyService
+@inject IBookingService BookingService
+@inject IAppStateService AppState
+
+@if (Tour != null)
+{
+    <div class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="relative bg-white rounded-3xl max-w-4xl w-full overflow-hidden shadow-2xl border border-sand-200 animate-fade-in my-8">
+            <!-- Close Button -->
+            <button @onclick="OnClose" class="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/50 hover:bg-black/75 text-white flex items-center justify-center transition">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <!-- Hero Image -->
+            <div class="relative h-72 sm:h-96 w-full overflow-hidden bg-slate-900">
+                <img src="@Tour.Image" alt="@Tour.Title" class="w-full h-full object-cover" />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
+                <div class="absolute bottom-6 left-6 right-6 text-white">
+                    <span class="px-3 py-1 rounded-full bg-gold-500/90 text-primary-950 text-xs font-bold uppercase tracking-wider mb-2 inline-block">
+                        @Tour.Tag &bull; @Tour.Category
+                    </span>
+                    <h2 class="font-serif-luxury text-2xl sm:text-4xl font-bold text-white">@Tour.Title</h2>
+                    <p class="text-sand-200 text-xs sm:text-sm mt-1 flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        </svg>
+                        @Tour.Destination
+                    </p>
+                </div>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="p-6 sm:p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Left: Description, Highlights, Guide -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Key Stats -->
+                        <div class="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-sand-100/70 border border-sand-200 text-center">
+                            <div>
+                                <span class="block text-slate-500 text-[10px] uppercase font-bold tracking-wider">Duration</span>
+                                <span class="font-bold text-slate-900 text-xs sm:text-sm">@Tour.Duration</span>
+                            </div>
+                            <div>
+                                <span class="block text-slate-500 text-[10px] uppercase font-bold tracking-wider">Intensity</span>
+                                <span class="font-bold text-slate-900 text-xs sm:text-sm">@Tour.Difficulty</span>
+                            </div>
+                            <div>
+                                <span class="block text-slate-500 text-[10px] uppercase font-bold tracking-wider">Party Size</span>
+                                <span class="font-bold text-slate-900 text-xs sm:text-sm">@Tour.GroupSize</span>
+                            </div>
+                        </div>
+
+                        <!-- Expedition Overview -->
+                        <div>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-primary-900 mb-2">Expedition Overview</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">@Tour.Description</p>
+                        </div>
+
+                        <!-- Highlights -->
+                        <div>
+                            <h3 class="text-sm font-bold uppercase tracking-wider text-primary-900 mb-2">Curated Highlights</h3>
+                            <ul class="space-y-2">
+                                @foreach (var h in Tour.Highlights)
+                                {
+                                    <li class="flex items-start gap-2 text-xs text-slate-700">
+                                        <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                        <span>@h</span>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+
+                        <!-- Lead Guide Profile -->
+                        <div class="p-4 rounded-2xl bg-teal-50/60 border border-teal-100 flex items-center gap-4">
+                            <img src="@Tour.Guide.Avatar" alt="@Tour.Guide.Name" class="w-12 h-12 rounded-full object-cover border-2 border-teal-600/30" />
+                            <div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-teal-800">Lead Expedition Naturalist</span>
+                                <h4 class="font-bold text-xs sm:text-sm text-slate-900">@Tour.Guide.Name</h4>
+                                <p class="text-[11px] text-slate-600">@Tour.Guide.Title</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Instant Booking Card -->
+                    <div class="p-6 rounded-2xl bg-gradient-to-b from-sand-100 to-sand-50 border border-sand-300 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-baseline mb-4">
+                                <span class="text-xs text-slate-500 uppercase font-semibold">Per Person Rate</span>
+                                <div class="text-right">
+                                    <span class="text-2xl font-bold font-serif-luxury text-slate-900">@CurrencyService.FormatPrice(Tour.PricePerPerson)</span>
+                                    <span class="text-[11px] text-slate-500 block">All permits included</span>
+                                </div>
+                            </div>
+
+                            <div class="space-y-3 mb-6">
+                                <div>
+                                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Date</label>
+                                    <input type="date" @bind="_tourDate" class="w-full text-xs p-2 rounded-xl border border-sand-300 bg-white" />
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">Participants</label>
+                                    <select @bind="_participants" class="w-full text-xs p-2 rounded-xl border border-sand-300 bg-white">
+                                        <option value="1">1 Guest</option>
+                                        <option value="2">2 Guests</option>
+                                        <option value="3">3 Guests</option>
+                                        <option value="4">4 Guests</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-6">
+                                <span class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-2">Expedition Equipment</span>
+                                <label class="flex items-center gap-2 text-xs text-slate-700 cursor-pointer mb-1.5">
+                                    <input type="checkbox" @bind="_includePhoto" class="rounded text-primary-700" />
+                                    <span>Sony Master Telephoto Kit ($120)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button @onclick="ReserveTour"
+                                class="w-full py-3.5 rounded-xl bg-primary-900 hover:bg-primary-950 text-white font-bold text-xs tracking-wider uppercase transition shadow-lg shadow-teal-950/20 flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4 text-gold-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span>Secure Expedition</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public Tour? Tour { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+
+    private DateTime _tourDate = DateTime.Today.AddDays(7);
+    private int _participants = 2;
+    private bool _includePhoto = true;
+
+    private void ReserveTour()
+    {
+        if (Tour == null) return;
+
+        decimal addons = _includePhoto ? 120m : 0m;
+        var addonsList = new List<string>();
+        if (_includePhoto) addonsList.Add("Sony Master Wildlife Photo Kit");
+
+        var booking = new BookingItem
+        {
+            ItemType = BookingItemType.Tour,
+            TargetId = Tour.Id,
+            Title = Tour.Title,
+            ImageUrl = Tour.Image,
+            Destination = Tour.Destination,
+            StartDate = _tourDate,
+            EndDate = null,
+            Guests = _participants,
+            UnitPriceUSD = Tour.PricePerPerson,
+            AddOnsPriceUSD = addons,
+            SelectedAddOns = addonsList
+        };
+
+        BookingService.AddBooking(booking);
+        AppState.PushNotification("Expedition Reserved", $"{Tour.Title} booked for {_participants} guests.", NotificationType.Success);
+        AppState.ToggleTripsDrawer(true);
+        OnClose.InvokeAsync();
+    }
+}

@@ -1,0 +1,169 @@
+@inject ItineraryPresenter Presenter
+@inject ICurrencyService CurrencyService
+@inject IBookingService BookingService
+@inject IAppStateService AppState
+@implements IItineraryView
+@implements IDisposable
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <!-- Header -->
+    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 mb-12">
+        <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 text-teal-800 text-[11px] font-bold uppercase tracking-wider mb-2 border border-teal-200">
+                <span>Interactive Vacation Architect</span>
+            </div>
+            <h2 class="font-serif-luxury text-3xl sm:text-4xl font-bold text-slate-900">
+                Bespoke Itinerary & Journey Planner
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1 max-w-xl">
+                Curate day-by-day vacation milestones, calculate live investments, and offset carbon impact automatically.
+            </p>
+        </div>
+
+        <!-- Destination Selector -->
+        <div class="flex flex-wrap items-center gap-2">
+            @foreach (var dest in _destinations)
+            {
+                <button @onclick="@(() => Presenter.SelectDestination(dest))"
+                        class="px-4 py-2 rounded-xl text-xs font-semibold transition @(Presenter.CurrentDestination == dest ? "bg-primary-900 text-white shadow-md shadow-primary-950/20" : "bg-sand-100 text-slate-600 hover:bg-sand-200")">
+                    @dest.Split(',')[0]
+                </button>
+            }
+        </div>
+    </div>
+
+    @if (_schedule != null)
+    {
+        <!-- Summary Stats Strip -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10 p-6 rounded-3xl bg-gradient-to-r from-primary-950 via-slate-900 to-primary-950 text-white shadow-xl border border-primary-800">
+            <div>
+                <span class="text-[10px] text-teal-300 uppercase font-bold tracking-wider block">Target Destination</span>
+                <h3 class="font-serif-luxury text-lg font-bold text-white">@_schedule.Destination</h3>
+                <span class="text-xs text-sand-300">@_schedule.TotalDays Curated Days</span>
+            </div>
+            <div>
+                <span class="text-[10px] text-gold-300 uppercase font-bold tracking-wider block">Estimated Journey Investment</span>
+                <div class="text-2xl font-bold font-serif-luxury text-gold-300">
+                    @CurrencyService.FormatPrice(_schedule.TotalCostUSD)
+                </div>
+                <span class="text-xs text-sand-300">Includes all transfers, private chefs & permits</span>
+            </div>
+            <div>
+                <span class="text-[10px] text-emerald-300 uppercase font-bold tracking-wider block">Regenerative Offset</span>
+                <div class="text-2xl font-bold text-emerald-400">
+                    @_schedule.EstimatedCarbonKg kg CO₂
+                </div>
+                <span class="text-xs text-emerald-200">100% neutralized via local solar re-investment</span>
+            </div>
+        </div>
+
+        <!-- Days Timeline -->
+        <div class="space-y-8">
+            @foreach (var day in _schedule.Days)
+            {
+                <div class="p-6 rounded-3xl bg-white border border-sand-200 shadow-sm">
+                    <div class="flex justify-between items-center pb-4 border-b border-sand-100 mb-6">
+                        <div class="flex items-center gap-3">
+                            <span class="w-9 h-9 rounded-2xl bg-primary-100 text-primary-900 font-serif-luxury font-bold flex items-center justify-center text-sm border border-primary-200">
+                                0@day.DayNumber
+                            </span>
+                            <div>
+                                <h4 class="font-serif-luxury text-base sm:text-lg font-bold text-slate-900">@day.Title</h4>
+                                <span class="text-[11px] text-slate-500">Day @day.DayNumber Schedule &bull; @day.Activities.Count milestones</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activities Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        @foreach (var act in day.Activities)
+                        {
+                            <div class="p-4 rounded-2xl bg-sand-50/70 border border-sand-200 relative group flex flex-col justify-between">
+                                <button @onclick="@(() => Presenter.RemoveActivity(day.DayNumber, act.Id))"
+                                        class="absolute top-3 right-3 text-slate-400 hover:text-rose-600 transition p-1 opacity-0 group-hover:opacity-100">
+                                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                                <div>
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-sand-200 text-slate-800">@act.Time</span>
+                                        <span class="text-[10px] font-bold text-primary-800 uppercase tracking-wider">@act.Category</span>
+                                    </div>
+                                    <h5 class="font-bold text-xs sm:text-sm text-slate-900 leading-snug">@act.Title</h5>
+                                    <span class="text-[11px] text-slate-500 mt-1 block">📍 @act.Location</span>
+                                </div>
+                                <div class="mt-3 pt-3 border-t border-sand-200/60 flex justify-between items-center text-xs">
+                                    <span class="text-slate-500">Cost</span>
+                                    <span class="font-bold text-slate-900">@(act.CostUSD > 0 ? CurrencyService.FormatPrice(act.CostUSD) : "Inclusive")</span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="mt-10 text-center">
+            <button @onclick="ReserveWholeItinerary"
+                    class="px-8 py-4 rounded-2xl bg-gradient-to-r from-primary-800 to-primary-950 hover:from-primary-700 hover:to-primary-900 text-white font-bold text-xs uppercase tracking-wider transition shadow-xl shadow-primary-950/20 inline-flex items-center gap-2">
+                <svg class="w-4 h-4 text-gold-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Add Complete Itinerary Package To Manifest</span>
+            </button>
+        </div>
+    }
+</div>
+
+@code {
+    private ItinerarySchedule? _schedule;
+    private IReadOnlyList<string> _destinations = Array.Empty<string>();
+
+    protected override void OnInitialized()
+    {
+        Presenter.AttachView(this);
+        CurrencyService.OnCurrencyChanged += StateHasChanged;
+    }
+
+    public void DisplaySchedule(ItinerarySchedule schedule)
+    {
+        _schedule = schedule;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void DisplayDestinations(IReadOnlyList<string> destinations)
+    {
+        _destinations = destinations;
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void ReserveWholeItinerary()
+    {
+        if (_schedule == null) return;
+
+        var booking = new BookingItem
+        {
+            ItemType = BookingItemType.Tour,
+            TargetId = $"itinerary-{_schedule.Destination.ToLowerInvariant().Replace(" ", "-")}",
+            Title = $"Complete Journey Package: {_schedule.Destination}",
+            ImageUrl = "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80",
+            Destination = _schedule.Destination,
+            StartDate = DateTime.Today.AddDays(21),
+            EndDate = DateTime.Today.AddDays(21 + _schedule.TotalDays),
+            Guests = 2,
+            UnitPriceUSD = _schedule.TotalCostUSD,
+            AddOnsPriceUSD = 0,
+            SelectedAddOns = new List<string> { "Private Chauffeur Included", "Concierge Guided Itinerary" }
+        };
+
+        BookingService.AddBooking(booking);
+        AppState.PushNotification("Itinerary Reserved", $"Complete vacation package added to your journey manifest.", NotificationType.Success);
+        AppState.ToggleTripsDrawer(true);
+    }
+
+    public void Dispose()
+    {
+        CurrencyService.OnCurrencyChanged -= StateHasChanged;
+    }
+}

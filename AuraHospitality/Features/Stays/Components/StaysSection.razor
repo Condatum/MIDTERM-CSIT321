@@ -1,0 +1,169 @@
+@inject StaysPresenter Presenter
+@inject ICurrencyService CurrencyService
+@inject IAppStateService AppState
+@implements IStaysView
+@implements IDisposable
+
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <!-- Header & Category Filters -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
+        <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 text-teal-800 text-[11px] font-bold uppercase tracking-wider mb-2 border border-teal-100">
+                <span>Sanctuary Collection</span>
+            </div>
+            <h2 class="font-serif-luxury text-3xl sm:text-4xl font-bold text-slate-900">
+                Architectural Retreats & Private Villas
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1 max-w-xl">
+                Secluded island overwater havens, high-alpine glass chalets, and historic cliffside manors.
+            </p>
+        </div>
+
+        <!-- Category Filter Pills -->
+        <div class="flex flex-wrap items-center gap-2">
+            @foreach (var cat in _categories)
+            {
+                <button @onclick="@(() => Presenter.FilterByCategoryAsync(cat))"
+                        class="px-4 py-2 rounded-xl text-xs font-semibold transition-all @(Presenter.Criteria.Category == cat ? "bg-primary-900 text-white shadow-md shadow-primary-950/20" : "bg-sand-100 text-slate-600 hover:bg-sand-200")">
+                    @cat
+                </button>
+            }
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    @if (_isLoading)
+    {
+        <div class="py-24 text-center">
+            <div class="inline-block w-8 h-8 border-4 border-primary-800 border-t-transparent rounded-full animate-spin"></div>
+            <p class="text-xs text-slate-500 mt-3 uppercase tracking-wider font-semibold">Curating luxury sanctuaries...</p>
+        </div>
+    }
+    else if (_stays.Count == 0)
+    {
+        <div class="py-24 text-center bg-sand-100/60 rounded-3xl border border-sand-200">
+            <p class="text-sm text-slate-600 font-semibold">No sanctuaries match your criteria.</p>
+            <button @onclick="@(() => Presenter.FilterByCategoryAsync("All"))" class="mt-3 px-4 py-2 text-xs font-bold text-teal-800 bg-white rounded-xl shadow-sm border border-sand-200">
+                Reset Filters
+            </button>
+        </div>
+    }
+    else
+    {
+        <!-- Stays Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @foreach (var stay in _stays)
+            {
+                <div class="group bg-white rounded-3xl overflow-hidden border border-sand-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <!-- Image Container -->
+                        <div class="relative h-64 w-full overflow-hidden bg-slate-900 cursor-pointer" @onclick="@(() => Presenter.ViewStayDetailsAsync(stay.Id))">
+                            <img src="@stay.Images.FirstOrDefault()"
+                                 alt="@stay.Name"
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
+                            
+                            <!-- Badges -->
+                            <div class="absolute top-4 left-4 flex gap-2">
+                                <span class="px-2.5 py-1 rounded-full bg-slate-950/70 backdrop-blur-md text-white text-[10px] font-bold tracking-wider uppercase">
+                                    @stay.Tag
+                                </span>
+                            </div>
+
+                            <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end text-white">
+                                <div>
+                                    <span class="text-[11px] text-sand-200 block">@stay.Destination</span>
+                                    <h3 class="font-serif-luxury text-lg font-bold text-white line-clamp-1">@stay.Name</h3>
+                                </div>
+                                <div class="flex items-center gap-1 bg-black/40 backdrop-blur-md px-2 py-0.5 rounded-lg text-xs font-bold text-gold-300">
+                                    <span>★</span>
+                                    <span>@stay.Rating.ToString("F2")</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Content -->
+                        <div class="p-5">
+                            <p class="text-xs text-slate-600 line-clamp-2 leading-relaxed mb-4">@stay.Description</p>
+                            
+                            <!-- Key Features -->
+                            <div class="flex flex-wrap gap-1.5 mb-4">
+                                @foreach (var feat in stay.Features.Take(2))
+                                {
+                                    <span class="text-[10px] font-medium px-2 py-0.5 rounded-md bg-sand-100 text-slate-700">@feat</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer: Price & Explore -->
+                    <div class="px-5 pb-5 pt-2 border-t border-sand-100 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] text-slate-400 uppercase font-semibold block">From</span>
+                            <span class="text-lg font-bold font-serif-luxury text-slate-900">@CurrencyService.FormatPrice(stay.PricePerNight)</span>
+                            <span class="text-[10px] text-slate-500"> / night</span>
+                        </div>
+                        <button @onclick="@(() => Presenter.ViewStayDetailsAsync(stay.Id))"
+                                class="px-4 py-2 rounded-xl bg-sand-100 group-hover:bg-primary-900 group-hover:text-white text-slate-800 text-xs font-bold transition flex items-center gap-1.5">
+                            <span>Explore</span>
+                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</section>
+
+<!-- Stay Detail Modal -->
+<StayDetailModal Stay="_selectedStay" OnClose="@(() => Presenter.CloseStayDetails())" />
+
+@code {
+    private IReadOnlyList<Stay> _stays = Array.Empty<Stay>();
+    private IReadOnlyList<string> _categories = Array.Empty<string>();
+    private Stay? _selectedStay;
+    private bool _isLoading = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Presenter.AttachView(this);
+        await Presenter.InitializeAsync();
+        CurrencyService.OnCurrencyChanged += StateHasChanged;
+    }
+
+    public void DisplayStays(IReadOnlyList<Stay> stays)
+    {
+        _stays = stays;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void DisplayCategories(IReadOnlyList<string> categories)
+    {
+        _categories = categories;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void DisplayStayDetail(Stay? stay)
+    {
+        _selectedStay = stay;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void SetLoading(bool isLoading)
+    {
+        _isLoading = isLoading;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void ShowErrorMessage(string message)
+    {
+        AppState.PushNotification("Error", message, NotificationType.Error);
+    }
+
+    public void Dispose()
+    {
+        CurrencyService.OnCurrencyChanged -= StateHasChanged;
+    }
+}

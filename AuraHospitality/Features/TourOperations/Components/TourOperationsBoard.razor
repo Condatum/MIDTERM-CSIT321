@@ -1,0 +1,79 @@
+@inject TourOperationsPresenter Presenter
+@implements ITourOperationsView
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="mb-8">
+        <span class="text-[10px] uppercase font-bold tracking-widest text-amber-800 bg-amber-100/60 px-3 py-1 rounded-full border border-amber-200">
+            Field Expedition Control
+        </span>
+        <h2 class="font-serif-luxury text-3xl font-bold text-slate-900 mt-2">Tourism & Excursion Operations</h2>
+        <p class="text-xs text-slate-500 mt-0.5">Live guide assignments, transport logistics, and guest check-in manifests.</p>
+    </div>
+
+    <!-- Excursions Table -->
+    <div class="bg-white rounded-3xl border border-sand-200 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+                <thead class="bg-sand-50/80 border-b border-sand-200 text-slate-500 font-bold uppercase tracking-wider text-[10px]">
+                    <tr>
+                        <th class="py-4 px-6">Dispatch ID</th>
+                        <th class="py-4 px-6">Excursion Title</th>
+                        <th class="py-4 px-6">Departure</th>
+                        <th class="py-4 px-6">Lead Naturalist</th>
+                        <th class="py-4 px-6">Vehicle / Vessel</th>
+                        <th class="py-4 px-6">Manifest</th>
+                        <th class="py-4 px-6">Status</th>
+                        <th class="py-4 px-6 text-right">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-sand-100">
+                    @foreach (var d in _dispatches)
+                    {
+                        <tr class="hover:bg-sand-50/50 transition">
+                            <td class="py-4 px-6 font-mono font-bold text-slate-900">@d.DispatchId</td>
+                            <td class="py-4 px-6 font-bold text-slate-900">@d.TourTitle</td>
+                            <td class="py-4 px-6 text-slate-600 font-medium">@d.DepartureTime</td>
+                            <td class="py-4 px-6 text-slate-700">@d.GuideName</td>
+                            <td class="py-4 px-6 text-slate-500">@d.TransportVehicle</td>
+                            <td class="py-4 px-6">
+                                <div class="flex items-center gap-2">
+                                    <span class="font-bold text-slate-900">@d.BookedParticipants / @d.MaxCapacity</span>
+                                    <div class="w-16 bg-sand-200 h-1.5 rounded-full overflow-hidden">
+                                        <div class="bg-amber-600 h-full rounded-full" style="width: @(d.BookedParticipants * 100 / Math.Max(1, d.MaxCapacity))%"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="py-4 px-6">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold @(d.BookedParticipants == d.MaxCapacity ? "bg-amber-100 text-amber-800" : "bg-teal-100 text-teal-800")">
+                                    @d.Status
+                                </span>
+                            </td>
+                            <td class="py-4 px-6 text-right">
+                                <button @onclick="@(() => Presenter.CheckInGuest(d.DispatchId))"
+                                        disabled="@(d.BookedParticipants >= d.MaxCapacity)"
+                                        class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold text-[11px] transition">
+                                    + Check-in
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    private IReadOnlyList<TourDispatchItem> _dispatches = Array.Empty<TourDispatchItem>();
+
+    protected override void OnInitialized()
+    {
+        Presenter.AttachView(this);
+    }
+
+    public void DisplayDispatches(IReadOnlyList<TourDispatchItem> dispatches)
+    {
+        _dispatches = dispatches;
+        InvokeAsync(StateHasChanged);
+    }
+}

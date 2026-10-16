@@ -1,0 +1,158 @@
+@inject ToursPresenter Presenter
+@inject ICurrencyService CurrencyService
+@inject IAppStateService AppState
+@implements IToursView
+@implements IDisposable
+
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <!-- Header & Category Filters -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
+        <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-800 text-[11px] font-bold uppercase tracking-wider mb-2 border border-amber-200">
+                <span>Curated Global Tourism</span>
+            </div>
+            <h2 class="font-serif-luxury text-3xl sm:text-4xl font-bold text-slate-900">
+                Immersive Expeditions & Safaris
+            </h2>
+            <p class="text-xs sm:text-sm text-slate-500 mt-1 max-w-xl">
+                Led by world-renowned marine biologists, UIAGM alpine guides, and Maasai trackers.
+            </p>
+        </div>
+
+        <!-- Category Filter Pills -->
+        <div class="flex flex-wrap items-center gap-2">
+            @foreach (var cat in _categories)
+            {
+                <button @onclick="@(() => Presenter.FilterByCategoryAsync(cat))"
+                        class="px-4 py-2 rounded-xl text-xs font-semibold transition-all @(Presenter.Criteria.Category == cat ? "bg-amber-700 text-white shadow-md shadow-amber-900/20" : "bg-sand-100 text-slate-600 hover:bg-sand-200")">
+                    @cat
+                </button>
+            }
+        </div>
+    </div>
+
+    <!-- Loading State -->
+    @if (_isLoading)
+    {
+        <div class="py-24 text-center">
+            <div class="inline-block w-8 h-8 border-4 border-amber-700 border-t-transparent rounded-full animate-spin"></div>
+            <p class="text-xs text-slate-500 mt-3 uppercase tracking-wider font-semibold">Organizing expeditions...</p>
+        </div>
+    }
+    else
+    {
+        <!-- Tours Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @foreach (var tour in _tours)
+            {
+                <div class="group bg-white rounded-3xl overflow-hidden border border-sand-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+                    <div>
+                        <!-- Image Container -->
+                        <div class="relative h-64 w-full overflow-hidden bg-slate-900 cursor-pointer" @onclick="@(() => Presenter.ViewTourDetailsAsync(tour.Id))">
+                            <img src="@tour.Image"
+                                 alt="@tour.Title"
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent"></div>
+                            
+                            <div class="absolute top-4 left-4">
+                                <span class="px-2.5 py-1 rounded-full bg-slate-950/70 backdrop-blur-md text-white text-[10px] font-bold tracking-wider uppercase">
+                                    @tour.Tag
+                                </span>
+                            </div>
+
+                            <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end text-white">
+                                <div>
+                                    <span class="text-[11px] text-amber-200 block">@tour.Destination</span>
+                                    <h3 class="font-serif-luxury text-lg font-bold text-white line-clamp-1">@tour.Title</h3>
+                                </div>
+                                <div class="flex items-center gap-1 bg-black/40 backdrop-blur-md px-2 py-0.5 rounded-lg text-xs font-bold text-gold-300">
+                                    <span>★</span>
+                                    <span>@tour.Rating.ToString("F2")</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Content -->
+                        <div class="p-5">
+                            <div class="flex items-center gap-4 text-[11px] text-slate-500 font-medium mb-3">
+                                <span>⏱ @tour.Duration</span>
+                                <span>&bull;</span>
+                                <span>👥 @tour.GroupSize</span>
+                                <span>&bull;</span>
+                                <span>⚡ @tour.Difficulty</span>
+                            </div>
+                            <p class="text-xs text-slate-600 line-clamp-2 leading-relaxed mb-4">@tour.Description</p>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="px-5 pb-5 pt-2 border-t border-sand-100 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] text-slate-400 uppercase font-semibold block">Experience</span>
+                            <span class="text-lg font-bold font-serif-luxury text-slate-900">@CurrencyService.FormatPrice(tour.PricePerPerson)</span>
+                            <span class="text-[10px] text-slate-500"> / guest</span>
+                        </div>
+                        <button @onclick="@(() => Presenter.ViewTourDetailsAsync(tour.Id))"
+                                class="px-4 py-2 rounded-xl bg-sand-100 group-hover:bg-amber-700 group-hover:text-white text-slate-800 text-xs font-bold transition flex items-center gap-1.5">
+                            <span>Details</span>
+                            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</section>
+
+<!-- Tour Detail Modal -->
+<TourDetailModal Tour="_selectedTour" OnClose="@(() => Presenter.CloseTourDetails())" />
+
+@code {
+    private IReadOnlyList<Tour> _tours = Array.Empty<Tour>();
+    private IReadOnlyList<string> _categories = Array.Empty<string>();
+    private Tour? _selectedTour;
+    private bool _isLoading = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Presenter.AttachView(this);
+        await Presenter.InitializeAsync();
+        CurrencyService.OnCurrencyChanged += StateHasChanged;
+    }
+
+    public void DisplayTours(IReadOnlyList<Tour> tours)
+    {
+        _tours = tours;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void DisplayCategories(IReadOnlyList<string> categories)
+    {
+        _categories = categories;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void DisplayTourDetail(Tour? tour)
+    {
+        _selectedTour = tour;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void SetLoading(bool isLoading)
+    {
+        _isLoading = isLoading;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void ShowErrorMessage(string message)
+    {
+        AppState.PushNotification("Error", message, NotificationType.Error);
+    }
+
+    public void Dispose()
+    {
+        CurrencyService.OnCurrencyChanged -= StateHasChanged;
+    }
+}

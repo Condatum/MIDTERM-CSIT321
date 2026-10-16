@@ -1,0 +1,130 @@
+@inject RoomRackPresenter Presenter
+@inject ICurrencyService CurrencyService
+
+@if (Room != null)
+{
+    <div class="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="relative bg-white rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl border border-sand-200 animate-fade-in my-8">
+            <!-- Modal Header -->
+            <div class="bg-slate-900 text-white p-6 flex justify-between items-center">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-amber-400 text-slate-950">Room @Room.RoomNumber</span>
+                        <span class="text-xs text-sand-300">@Room.Category</span>
+                        @if (Room.IsVip)
+                        {
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gold-500/20 text-gold-300 border border-gold-400/30">VIP IN-HOUSE</span>
+                        }
+                    </div>
+                    <h3 class="font-serif-luxury text-xl font-bold mt-1">@Room.Name</h3>
+                </div>
+                <button @onclick="@(() => Presenter.CloseRoomModal())" class="text-white/70 hover:text-white p-2">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="p-6 sm:p-8 space-y-6">
+                <!-- Status Actions -->
+                <div class="p-4 rounded-2xl bg-sand-100/70 border border-sand-200">
+                    <span class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-2">Change Room Rack Status</span>
+                    <div class="flex flex-wrap gap-2">
+                        <button @onclick="@(() => Presenter.UpdateRoomStatus(Room.RoomNumber, RoomStatusType.Occupied))"
+                                class="px-3 py-1.5 rounded-xl text-xs font-bold transition @(Room.Status == RoomStatusType.Occupied ? "bg-emerald-600 text-white" : "bg-white text-slate-700 hover:bg-sand-200")">
+                            Occupied
+                        </button>
+                        <button @onclick="@(() => Presenter.UpdateRoomStatus(Room.RoomNumber, RoomStatusType.VacantClean))"
+                                class="px-3 py-1.5 rounded-xl text-xs font-bold transition @(Room.Status == RoomStatusType.VacantClean ? "bg-teal-600 text-white" : "bg-white text-slate-700 hover:bg-sand-200")">
+                            Vacant Clean
+                        </button>
+                        <button @onclick="@(() => Presenter.UpdateRoomStatus(Room.RoomNumber, RoomStatusType.DirtyTurnover))"
+                                class="px-3 py-1.5 rounded-xl text-xs font-bold transition @(Room.Status == RoomStatusType.DirtyTurnover ? "bg-amber-600 text-white" : "bg-white text-slate-700 hover:bg-sand-200")">
+                            Dirty (Turnover)
+                        </button>
+                        <button @onclick="@(() => Presenter.UpdateRoomStatus(Room.RoomNumber, RoomStatusType.InspectedReady))"
+                                class="px-3 py-1.5 rounded-xl text-xs font-bold transition @(Room.Status == RoomStatusType.InspectedReady ? "bg-blue-600 text-white" : "bg-white text-slate-700 hover:bg-sand-200")">
+                            Inspected Ready
+                        </button>
+                        <button @onclick="@(() => Presenter.UpdateRoomStatus(Room.RoomNumber, RoomStatusType.Maintenance))"
+                                class="px-3 py-1.5 rounded-xl text-xs font-bold transition @(Room.Status == RoomStatusType.Maintenance ? "bg-rose-600 text-white" : "bg-white text-slate-700 hover:bg-sand-200")">
+                            Maintenance
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Guest & Butler Info -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="p-3 rounded-xl bg-sand-50 border border-sand-200">
+                        <span class="block text-[10px] text-slate-500 uppercase font-bold">Registered Guest</span>
+                        <span class="text-xs font-bold text-slate-900">@(string.IsNullOrWhiteSpace(Room.GuestName) ? "None (Vacant)" : Room.GuestName)</span>
+                    </div>
+                    <div class="p-3 rounded-xl bg-sand-50 border border-sand-200">
+                        <span class="block text-[10px] text-slate-500 uppercase font-bold">Expected Checkout</span>
+                        <span class="text-xs font-bold text-slate-900">@(string.IsNullOrWhiteSpace(Room.CheckOutDate) ? "N/A" : Room.CheckOutDate)</span>
+                    </div>
+                    <div class="p-3 rounded-xl bg-sand-50 border border-sand-200">
+                        <span class="block text-[10px] text-slate-500 uppercase font-bold">Dedicated Butler</span>
+                        <span class="text-xs font-bold text-slate-900">@Room.AssignedButler</span>
+                    </div>
+                </div>
+
+                <!-- Folio Breakdown -->
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-800">In-House Guest Folio Ledger</h4>
+                        <span class="text-xs font-bold text-slate-900">Balance: @CurrencyService.FormatPrice(Room.FolioBalance)</span>
+                    </div>
+                    <div class="space-y-2 max-h-48 overflow-y-auto">
+                        @foreach (var charge in Charges)
+                        {
+                            <div class="p-2.5 rounded-xl bg-sand-50 border border-sand-200 flex justify-between items-center text-xs">
+                                <div>
+                                    <span class="font-semibold text-slate-900">@charge.Description</span>
+                                    <span class="text-[10px] text-slate-500 block">@charge.Date.ToString("MMM dd, yyyy") &bull; @charge.Category</span>
+                                </div>
+                                <span class="font-bold text-slate-900">@CurrencyService.FormatPrice(charge.Amount)</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Quick Charge Form -->
+                <div class="p-4 rounded-2xl bg-sand-50 border border-sand-200">
+                    <span class="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-2">Post Direct Room Charge</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <input type="text" @bind="_chargeDesc" placeholder="Item description..." class="text-xs p-2 rounded-xl border bg-white" />
+                        <select @bind="_chargeCategory" class="text-xs p-2 rounded-xl border bg-white">
+                            <option value="Dining">Michelin Dining</option>
+                            <option value="Spa">Ayurvedic Spa</option>
+                            <option value="Expedition">Tour / Charter</option>
+                            <option value="In-Room">In-Room Minibar</option>
+                        </select>
+                        <div class="flex gap-2">
+                            <input type="number" @bind="_chargeAmount" placeholder="Amount (USD)" class="w-full text-xs p-2 rounded-xl border bg-white" />
+                            <button @onclick="SubmitCharge" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs">
+                                Post
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public RoomRackItem? Room { get; set; }
+    [Parameter] public IReadOnlyList<FolioCharge> Charges { get; set; } = Array.Empty<FolioCharge>();
+
+    private string _chargeDesc = "Signature Cocktail Degustation";
+    private string _chargeCategory = "Dining";
+    private decimal _chargeAmount = 185m;
+
+    private void SubmitCharge()
+    {
+        if (Room == null || _chargeAmount <= 0) return;
+        Presenter.PostCharge(Room.RoomNumber, _chargeDesc, _chargeCategory, _chargeAmount);
+    }
+}

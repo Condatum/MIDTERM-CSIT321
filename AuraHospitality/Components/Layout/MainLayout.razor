@@ -1,0 +1,44 @@
+@inherits LayoutComponentBase
+@inject IAppStateService AppState
+@inject IJSRuntime JSRuntime
+@implements IDisposable
+
+<div class="min-h-screen flex flex-col bg-sand-50 text-slate-800">
+    <LuxuryHeader />
+
+    <main class="flex-1">
+        @Body
+    </main>
+
+    <LuxuryFooter />
+
+    <ActiveTripsDrawer />
+    <VirtualConciergeDrawer />
+    <NotificationToast />
+</div>
+
+<div id="blazor-error-ui" class="hidden">
+    An unhandled error has occurred.
+    <a href="" class="reload font-bold underline">Reload</a>
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        AppState.OnConfettiRequested += TriggerConfettiJs;
+    }
+
+    private async void TriggerConfettiJs()
+    {
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("triggerConfetti");
+        }
+        catch { }
+    }
+
+    public void Dispose()
+    {
+        AppState.OnConfettiRequested -= TriggerConfettiJs;
+    }
+}

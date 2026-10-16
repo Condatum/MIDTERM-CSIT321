@@ -1,0 +1,136 @@
+@page "/"
+@rendermode InteractiveServer
+@inject IAppStateService AppState
+@implements IDisposable
+
+<PageTitle>AURA | Luxury Hospitality & Global Tourism Suite</PageTitle>
+
+@if (AppState.ViewMode == AppViewMode.GuestExperience)
+{
+    <!-- Guest Experience View -->
+    <HeroSection />
+
+    <div class="border-b border-sand-200 bg-white/70 backdrop-blur-md sticky top-20 z-30 shadow-xs lg:hidden">
+        <div class="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-center gap-2 overflow-x-auto">
+            <button @onclick="@(() => AppState.SetGuestNavTab("stays"))"
+                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap @(AppState.GuestNavTab == "stays" ? "bg-primary-900 text-white" : "bg-sand-100 text-slate-700")">
+                Luxury Stays
+            </button>
+            <button @onclick="@(() => AppState.SetGuestNavTab("tours"))"
+                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap @(AppState.GuestNavTab == "tours" ? "bg-primary-900 text-white" : "bg-sand-100 text-slate-700")">
+                Expeditions
+            </button>
+            <button @onclick="@(() => AppState.SetGuestNavTab("planner"))"
+                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap @(AppState.GuestNavTab == "planner" ? "bg-primary-900 text-white" : "bg-sand-100 text-slate-700")">
+                Itinerary Planner
+            </button>
+            <button @onclick="@(() => AppState.SetGuestNavTab("dining"))"
+                    class="px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap @(AppState.GuestNavTab == "dining" ? "bg-primary-900 text-white" : "bg-sand-100 text-slate-700")">
+                Dining & Spa
+            </button>
+        </div>
+    </div>
+
+    <!-- Active Tab Content -->
+    @switch (AppState.GuestNavTab)
+    {
+        case "tours":
+            <ToursSection />
+            break;
+        case "planner":
+            <ItineraryPlannerView />
+            break;
+        case "dining":
+            <DiningWellnessSection />
+            break;
+        default:
+            <StaysSection />
+            
+            <!-- Mid-page Spotlight: Curated Expeditions Callout -->
+            <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-primary-950 via-slate-900 to-primary-950 p-8 sm:p-12 text-white shadow-2xl border border-primary-800">
+                    <div class="relative z-10 max-w-2xl">
+                        <span class="px-3 py-1 rounded-full bg-gold-400/20 text-gold-300 text-xs font-bold uppercase tracking-wider mb-4 inline-block border border-gold-400/30">
+                            Regenerative Field Expeditions
+                        </span>
+                        <h3 class="font-serif-luxury text-2xl sm:text-4xl font-bold mb-4">
+                            Beyond Stays: Embark on High-Altitude & Marine Expeditions
+                        </h3>
+                        <p class="text-sand-300 text-xs sm:text-sm leading-relaxed mb-6 font-light">
+                            Pair your sanctuary with exclusive wildlife migrations in the Serengeti, night diving with manta rays in the Maldives, or private helicopter glacier drops in the Swiss Alps.
+                        </p>
+                        <div class="flex flex-wrap gap-3">
+                            <button @onclick="@(() => AppState.SetGuestNavTab("tours"))"
+                                    class="px-6 py-3.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-primary-950 font-bold text-xs uppercase tracking-wider transition shadow-lg">
+                                Explore Curated Expeditions
+                            </button>
+                            <button @onclick="@(() => AppState.SetGuestNavTab("planner"))"
+                                    class="px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs uppercase tracking-wider transition border border-white/20">
+                                Build Custom Vacation
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <ToursSection />
+            <DiningWellnessSection />
+            break;
+    }
+}
+else
+{
+    <!-- Operations & PMS Hub View -->
+    <div class="bg-slate-950 text-white border-b border-slate-800 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span class="text-xs font-mono font-bold tracking-widest text-amber-300 uppercase">AURA PMS & TOUR OPS BACK-OFFICE</span>
+                </div>
+                <h1 class="font-serif-luxury text-2xl sm:text-3xl font-bold mt-1">Property & Tourism Operations Suite</h1>
+            </div>
+
+            <!-- Operations Navigation Pills -->
+            <div class="flex items-center gap-2 p-1.5 rounded-2xl bg-slate-900 border border-slate-800">
+                <button @onclick="@(() => AppState.SetPmsNavTab("rooms"))"
+                        class="px-4 py-2 rounded-xl text-xs font-bold transition @(AppState.PmsNavTab == "rooms" || AppState.PmsNavTab == "overview" ? "bg-amber-400 text-slate-950 shadow" : "text-slate-400 hover:text-white")">
+                    Room Rack & PMS
+                </button>
+                <button @onclick="@(() => AppState.SetPmsNavTab("tours"))"
+                        class="px-4 py-2 rounded-xl text-xs font-bold transition @(AppState.PmsNavTab == "tours" ? "bg-amber-400 text-slate-950 shadow" : "text-slate-400 hover:text-white")">
+                    Tour Manifests
+                </button>
+                <button @onclick="@(() => AppState.SetPmsNavTab("housekeeping"))"
+                        class="px-4 py-2 rounded-xl text-xs font-bold transition @(AppState.PmsNavTab == "housekeeping" ? "bg-amber-400 text-slate-950 shadow" : "text-slate-400 hover:text-white")">
+                    Housekeeping & Butler
+                </button>
+            </div>
+        </div>
+    </div>
+
+    @switch (AppState.PmsNavTab)
+    {
+        case "tours":
+            <TourOperationsBoard />
+            break;
+        case "housekeeping":
+            <HousekeepingBoard />
+            break;
+        default:
+            <RoomRackDashboard />
+            break;
+    }
+}
+
+@code {
+    protected override void OnInitialized()
+    {
+        AppState.OnStateChanged += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        AppState.OnStateChanged -= StateHasChanged;
+    }
+}

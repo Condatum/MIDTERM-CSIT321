@@ -1,0 +1,114 @@
+@inject HousekeepingPresenter Presenter
+@implements IHousekeepingView
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+        <div>
+            <span class="text-[10px] uppercase font-bold tracking-widest text-teal-800 bg-teal-100/60 px-3 py-1 rounded-full border border-teal-200">
+                Staff Operations
+            </span>
+            <h2 class="font-serif-luxury text-3xl font-bold text-slate-900 mt-2">Housekeeping & Butler Dispatch</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Real-time room service requests, turnover sanitization, and guest amenities.</p>
+        </div>
+        <button @onclick="@(() => Presenter.OpenCreateModal())"
+                class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider transition flex items-center gap-2 shadow-md">
+            <svg class="w-4 h-4 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            <span>New Dispatch</span>
+        </button>
+    </div>
+
+    <!-- Filter Pills -->
+    <div class="flex gap-2 mb-6 p-2 rounded-2xl bg-sand-100/70 border border-sand-200 w-fit">
+        <button @onclick="@(() => Presenter.FilterByStatus("All"))"
+                class="px-4 py-1.5 rounded-xl text-xs font-bold transition @(Presenter.StatusFilter == "All" ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-sand-200")">
+            All Tasks (@_tickets.Count)
+        </button>
+        <button @onclick="@(() => Presenter.FilterByStatus("Pending"))"
+                class="px-4 py-1.5 rounded-xl text-xs font-bold transition @(Presenter.StatusFilter == "Pending" ? "bg-amber-600 text-white" : "text-slate-600 hover:bg-sand-200")">
+            Pending
+        </button>
+        <button @onclick="@(() => Presenter.FilterByStatus("InProgress"))"
+                class="px-4 py-1.5 rounded-xl text-xs font-bold transition @(Presenter.StatusFilter == "InProgress" ? "bg-teal-600 text-white" : "text-slate-600 hover:bg-sand-200")">
+            In Progress
+        </button>
+        <button @onclick="@(() => Presenter.FilterByStatus("Completed"))"
+                class="px-4 py-1.5 rounded-xl text-xs font-bold transition @(Presenter.StatusFilter == "Completed" ? "bg-emerald-600 text-white" : "text-slate-600 hover:bg-sand-200")">
+            Completed
+        </button>
+    </div>
+
+    <!-- Tickets Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        @foreach (var t in _tickets)
+        {
+            <div class="p-5 rounded-2xl bg-white border border-sand-200 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                <div>
+                    <div class="flex justify-between items-start mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-sand-100 text-slate-900">
+                                Suite @t.RoomNumber
+                            </span>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full @GetPriorityBadge(t.Priority)">
+                                @t.Priority
+                            </span>
+                        </div>
+                        <span class="text-[10px] text-slate-400">@t.TimeAgo</span>
+                    </div>
+
+                    <h4 class="font-bold text-xs sm:text-sm text-slate-900 mb-1 leading-snug">@t.Title</h4>
+                    <span class="text-[11px] text-slate-500 block mb-3">@t.ServiceType &bull; Guest: @t.GuestName</span>
+                </div>
+
+                <div class="pt-3 border-t border-sand-100 flex justify-between items-center text-xs">
+                    <span class="text-slate-500">Assignee: <b class="text-slate-700">@t.Assignee</b></span>
+                    <button @onclick="@(() => Presenter.AdvanceTicketStatus(t.TicketId))"
+                            class="px-3 py-1 rounded-lg text-xs font-bold transition @GetStatusButton(t.Status)">
+                        @t.Status ➔
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<CreateTicketModal IsOpen="_isCreateModalOpen" />
+
+@code {
+    private IReadOnlyList<HousekeepingTicket> _tickets = Array.Empty<HousekeepingTicket>();
+    private bool _isCreateModalOpen = false;
+
+    protected override void OnInitialized()
+    {
+        Presenter.AttachView(this);
+    }
+
+    public void DisplayTickets(IReadOnlyList<HousekeepingTicket> tickets)
+    {
+        _tickets = tickets;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void ShowCreateModal(bool isOpen)
+    {
+        _isCreateModalOpen = isOpen;
+        InvokeAsync(StateHasChanged);
+    }
+
+    private string GetPriorityBadge(TicketPriority p) => p switch
+    {
+        TicketPriority.Urgent => "bg-rose-100 text-rose-800 border border-rose-200",
+        TicketPriority.High => "bg-amber-100 text-amber-800 border border-amber-200",
+        TicketPriority.Medium => "bg-teal-100 text-teal-800 border border-teal-200",
+        _ => "bg-slate-100 text-slate-700"
+    };
+
+    private string GetStatusButton(TicketStatus s) => s switch
+    {
+        TicketStatus.Pending => "bg-amber-100 text-amber-800 hover:bg-amber-200",
+        TicketStatus.InProgress => "bg-teal-100 text-teal-800 hover:bg-teal-200",
+        TicketStatus.Completed => "bg-emerald-100 text-emerald-800 hover:bg-emerald-200",
+        _ => "bg-slate-100"
+    };
+}

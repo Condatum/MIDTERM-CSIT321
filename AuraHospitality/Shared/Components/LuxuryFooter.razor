@@ -1,0 +1,79 @@
+@inject IAppStateService AppState
+
+<footer class="bg-primary-950 text-sand-200 border-t border-primary-900 pt-16 pb-12 mt-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-primary-900/60">
+            <!-- Brand Column -->
+            <div class="lg:col-span-2">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-primary-800 to-primary-900 flex items-center justify-center text-gold-400 border border-gold-400/30">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="font-serif-luxury text-2xl font-bold tracking-wider text-white">AURA</span>
+                        <span class="text-[10px] tracking-widest uppercase text-teal-400 font-semibold block">Hospitality & Tourism Suite</span>
+                    </div>
+                </div>
+                <p class="text-sand-300 text-xs leading-relaxed max-w-sm mb-6">
+                    A global hospitality and regenerative tourism collective. Blending ultra-luxury private sanctuaries with world-class conservation expeditions and seamless property management technology.
+                </p>
+                <div class="flex items-center gap-3 text-gold-400 text-xs">
+                    <span class="px-3 py-1 rounded-full border border-gold-400/30 bg-gold-400/10">The Leading Hotels of the World</span>
+                    <span class="px-3 py-1 rounded-full border border-teal-400/30 bg-teal-400/10 text-teal-300">UNESCO Biosphere Partner</span>
+                </div>
+            </div>
+
+            <!-- Destinations -->
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-gold-400 mb-4">Sanctuaries</h4>
+                <ul class="space-y-2.5 text-xs text-sand-300">
+                    <li><a href="javascript:void(0)" class="hover:text-white transition">Baa Atoll, Maldives</a></li>
+                    <li><a href="javascript:void(0)" class="hover:text-white transition">Amalfi Coast, Italy</a></li>
+                    <li><a href="javascript:void(0)" class="hover:text-white transition">Zermatt, Swiss Alps</a></li>
+                    <li><a href="javascript:void(0)" class="hover:text-white transition">Serengeti, Tanzania</a></li>
+                    <li><a href="javascript:void(0)" class="hover:text-white transition">Kyoto, Japan</a></li>
+                    <li><a href="javascript:void(0)" class="hover:text-white transition">Torres del Paine, Patagonia</a></li>
+                </ul>
+            </div>
+
+            <!-- Operations / Tech Suite -->
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-gold-400 mb-4">Hospitality Suite</h4>
+                <ul class="space-y-2.5 text-xs text-sand-300">
+                    <li><button @onclick="@(() => { AppState.SetViewMode(AppViewMode.OperationsPMS); AppState.SetPmsNavTab("rooms"); })" class="hover:text-white text-left transition">Room Rack & PMS</button></li>
+                    <li><button @onclick="@(() => { AppState.SetViewMode(AppViewMode.OperationsPMS); AppState.SetPmsNavTab("tours"); })" class="hover:text-white text-left transition">Tour Manifest Ops</button></li>
+                    <li><button @onclick="@(() => { AppState.SetViewMode(AppViewMode.OperationsPMS); AppState.SetPmsNavTab("housekeeping"); })" class="hover:text-white text-left transition">Housekeeping Board</button></li>
+                    <li><button @onclick="@(() => { AppState.SetViewMode(AppViewMode.OperationsPMS); AppState.SetPmsNavTab("overview"); })" class="hover:text-white text-left transition">RevPAR & Yield Metrics</button></li>
+                    <li><button @onclick="@(() => AppState.ToggleConcierge(true))" class="hover:text-white text-left transition">Celeste Virtual Concierge</button></li>
+                </ul>
+            </div>
+
+            <!-- Sustainability & Newsletter -->
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-gold-400 mb-4">Regenerative Tourism</h4>
+                <p class="text-xs text-sand-300 leading-relaxed mb-4">
+                    5% of all expedition fees are invested directly into local wildlife and indigenous cultural preservation initiatives.
+                </p>
+                <div class="relative">
+                    <input type="email" placeholder="VIP Private Journal..." class="w-full bg-primary-900 border border-primary-800 rounded-xl py-2 px-3 text-xs text-white placeholder-primary-400 focus:outline-none focus:border-teal-400" />
+                    <button class="mt-2 w-full py-2 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-primary-950 font-bold text-xs rounded-xl transition shadow">
+                        Subscribe
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-sand-400">
+            <p>&copy; @DateTime.UtcNow.Year AURA Luxury Hospitality & Tourism International. All rights reserved.</p>
+            <div class="flex items-center gap-6">
+                <span>Model-View-Presenter (MVP) Architecture</span>
+                <span>&bull;</span>
+                <span>Vertical Slice Design</span>
+                <span>&bull;</span>
+                <span>Blazor Server & C#</span>
+            </div>
+        </div>
+    </div>
+</footer>
