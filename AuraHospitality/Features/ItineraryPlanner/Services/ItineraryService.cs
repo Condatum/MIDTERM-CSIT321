@@ -39,7 +39,6 @@ public class ItineraryService : IItineraryService
             "Kyoto & Arashiyama, Japan" => CreateKyotoSchedule(),
             _ => CreateAmalfiSchedule()
         };
-        OnScheduleChanged?.Invoke();
         return _currentSchedule;
     }
 
